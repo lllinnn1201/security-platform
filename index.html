@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <!-- 字元編碼 -->
+  <meta charset="UTF-8">
+  <!-- 響應式視窗設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO 描述 -->
+  <meta name="description" content="DevSecOps CI/CD Pipeline Dashboard - 自動化安全掃描、可達性分析與品質門檻決策系統">
+  <title>DevSecOps Pipeline Dashboard</title>
+  <!-- 主樣式檔 -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ======== 頂部導航列 ======== -->
+  <header class="header">
+    <!-- Logo 區域 -->
+    <div class="header-logo">
+      <div class="logo-icon">DS</div>
+      <h1>DevSecOps Pipeline</h1>
+    </div>
+    <!-- 右側資訊 -->
+    <div class="header-actions">
+      <!-- 系統狀態徽章 -->
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        系統運行中
+      </div>
+    </div>
+  </header>
+
+  <!-- ======== 側邊欄 ======== -->
+  <aside class="sidebar">
+    <!-- 總覽區 -->
+    <div class="sidebar-section-title">總覽</div>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a class="nav-link active" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Pipeline 總覽</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- 階段區 -->
+    <div class="sidebar-section-title">Pipeline 階段</div>
+    <ul class="nav-menu">
+      <!-- Phase 1 -->
+      <li class="nav-item">
+        <a class="nav-link" data-page="phase1">
+          <span class="phase-dot" style="background:var(--phase-1)"></span>
+          <span class="nav-icon">🛡️</span>
+          <span>SAST 源碼檢測</span>
+        </a>
+      </li>
+      <!-- Phase 2 -->
+      <li class="nav-item">
+        <a class="nav-link" data-page="phase2">
+          <span class="phase-dot" style="background:var(--phase-2)"></span>
+          <span class="nav-icon">📦</span>
+          <span>SCA / SBOM</span>
+        </a>
+      </li>
+      <!-- Phase 3 -->
+      <li class="nav-item">
+        <a class="nav-link" data-page="phase3">
+          <span class="phase-dot" style="background:var(--phase-3)"></span>
+          <span class="nav-icon">🔬</span>
+          <span>動態可達性 ⭐</span>
+        </a>
+      </li>
+      <!-- Phase 4 -->
+      <li class="nav-item">
+        <a class="nav-link" data-page="phase4">
+          <span class="phase-dot" style="background:var(--phase-4)"></span>
+          <span class="nav-icon">⚡</span>
+          <span>效能測試</span>
+        </a>
+      </li>
+      <!-- Phase 5 -->
+      <li class="nav-item">
+        <a class="nav-link" data-page="phase5">
+          <span class="phase-dot" style="background:var(--phase-5)"></span>
+          <span class="nav-icon">🚪</span>
+          <span>Quality Gate</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ======== 主內容區 ======== -->
+  <main class="main-content" id="main-content">
+    <!-- 內容由 JavaScript 動態渲染 -->
+  </main>
+
+  <!-- ======== JavaScript 載入順序 ======== -->
+  <!-- 1. 模擬資料（其他模組依賴的資料來源） -->
+  <script src="js/mockData.js"></script>
+  <!-- 2. Dashboard 渲染邏輯 -->
+  <script src="js/dashboard.js"></script>
+  <!-- 3. Phase 詳細頁面渲染邏輯 -->
+  <script src="js/phases.js"></script>
+  <!-- 4. 主應用路由（最後載入，確保其他模組已就緒） -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

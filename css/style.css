@@ -1,0 +1,1212 @@
+/* ========================================
+   DevSecOps Pipeline Dashboard - 設計系統
+   暗色主題 + Glassmorphism + 動畫效果
+   ======================================== */
+
+/* --- Google Fonts 引入 --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --- CSS 變數：主題色系 --- */
+:root {
+  /* 底色系 */
+  --bg-primary: #0a0e1a;          /* 最深背景 */
+  --bg-secondary: #111827;        /* 次深背景 */
+  --bg-card: rgba(17, 24, 39, 0.7); /* 卡片背景（半透明） */
+  --bg-hover: rgba(30, 41, 59, 0.8); /* 懸停背景 */
+
+  /* 文字色 */
+  --text-primary: #f1f5f9;        /* 主文字 */
+  --text-secondary: #94a3b8;      /* 次文字 */
+  --text-muted: #64748b;          /* 淡化文字 */
+
+  /* 5 階段對應色彩 */
+  --phase-1: #22c55e;             /* 🟢 SAST - 綠色 */
+  --phase-1-glow: rgba(34, 197, 94, 0.3);
+  --phase-2: #eab308;             /* 🟡 SCA/SBOM - 黃色 */
+  --phase-2-glow: rgba(234, 179, 8, 0.3);
+  --phase-3: #ef4444;             /* 🔴 動態可達性 - 紅色 */
+  --phase-3-glow: rgba(239, 68, 68, 0.3);
+  --phase-4: #a855f7;             /* 🟣 效能測試 - 紫色 */
+  --phase-4-glow: rgba(168, 85, 247, 0.3);
+  --phase-5: #3b82f6;             /* 🔵 Quality Gate - 藍色 */
+  --phase-5-glow: rgba(59, 130, 246, 0.3);
+
+  /* 狀態色 */
+  --status-pass: #22c55e;
+  --status-fail: #ef4444;
+  --status-running: #3b82f6;
+  --status-waiting: #64748b;
+  --status-warning: #f59e0b;
+
+  /* 嚴重性色彩 */
+  --severity-critical: #dc2626;
+  --severity-high: #ef4444;
+  --severity-medium: #f59e0b;
+  --severity-low: #3b82f6;
+  --severity-info: #64748b;
+
+  /* 邊框與陰影 */
+  --border-color: rgba(148, 163, 184, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.15);
+
+  /* 圓角與間距 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* 側邊欄寬度 */
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 72px;
+  --header-height: 64px;
+}
+
+/* --- 全域重設 --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- 基礎排版 --- */
+html {
+  font-size: 16px;           /* 基礎字級 */
+  scroll-behavior: smooth;   /* 平滑捲動 */
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; /* 主字型 */
+  background: var(--bg-primary);  /* 暗色背景 */
+  color: var(--text-primary);     /* 主文字色 */
+  min-height: 100vh;              /* 至少填滿螢幕高度 */
+  overflow-x: hidden;             /* 隱藏水平捲軸 */
+  line-height: 1.6;               /* 行高 */
+}
+
+/* --- 背景裝飾粒子 --- */
+body::before {
+  content: '';
+  position: fixed;                    /* 固定定位 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),  /* 左側藍光 */
+    radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),  /* 右上紫光 */
+    radial-gradient(ellipse at 60% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);   /* 右下綠光 */
+  pointer-events: none;              /* 不攔截滑鼠事件 */
+  z-index: 0;                        /* 置於最底層 */
+}
+
+/* ========================================
+   頂部導航列
+   ======================================== */
+.header {
+  position: fixed;                     /* 固定在頂部 */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: rgba(10, 14, 26, 0.85); /* 半透明深色 */
+  backdrop-filter: blur(20px);         /* 毛玻璃效果 */
+  border-bottom: 1px solid var(--glass-border); /* 底部邊框 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;      /* 兩端對齊 */
+  padding: 0 24px;
+  z-index: 1000;                       /* 最高層級 */
+}
+
+/* Logo 區域 */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;                           /* 元素間距 */
+}
+
+/* Logo 圖標 */
+.header-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--phase-5), var(--phase-4)); /* 藍紫漸層 */
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+}
+
+/* Logo 文字 */
+.header-logo h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text-primary), var(--phase-5)); /* 漸層文字 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 頂部右側資訊 */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 狀態徽章 */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(34, 197, 94, 0.15); /* 綠色半透明底 */
+  color: var(--status-pass);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* 狀態點 - 脈衝動畫 */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-pass);
+  animation: pulse 2s ease-in-out infinite; /* 脈衝動畫 */
+}
+
+/* ========================================
+   側邊欄
+   ======================================== */
+.sidebar {
+  position: fixed;              /* 固定在左側 */
+  top: var(--header-height);
+  left: 0;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--header-height)); /* 減去頂部高度 */
+  background: rgba(17, 24, 39, 0.6);       /* 半透明深色 */
+  backdrop-filter: blur(20px);              /* 毛玻璃 */
+  border-right: 1px solid var(--glass-border);
+  padding: 24px 16px;
+  z-index: 900;
+  overflow-y: auto;                         /* 垂直捲動 */
+  transition: width 0.3s ease;              /* 寬度過渡動畫 */
+}
+
+/* 側邊欄標題 */
+.sidebar-section-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;        /* 全大寫 */
+  letter-spacing: 1.5px;            /* 字距加大 */
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+/* 導航選單 */
+.nav-menu {
+  list-style: none;                  /* 移除清單符號 */
+  margin-bottom: 32px;
+}
+
+/* 導航項目 */
+.nav-item {
+  margin-bottom: 4px;
+}
+
+/* 導航連結 */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s ease;          /* 平滑過渡 */
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+/* 導航連結懸停 */
+.nav-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+
+/* 導航連結選中狀態 */
+.nav-link.active {
+  background: rgba(59, 130, 246, 0.15);  /* 藍色半透明 */
+  color: var(--phase-5);
+  border-color: rgba(59, 130, 246, 0.3);
+  font-weight: 600;
+}
+
+/* 導航圖標 */
+.nav-icon {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+
+/* 各階段導航的色彩指示點 */
+.nav-link .phase-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   主內容區
+   ======================================== */
+.main-content {
+  margin-left: var(--sidebar-width);     /* 左側留出側邊欄空間 */
+  margin-top: var(--header-height);      /* 上方留出頂部導航列空間 */
+  padding: 32px;
+  min-height: calc(100vh - var(--header-height));
+  position: relative;
+  z-index: 1;
+}
+
+/* 頁面標題區 */
+.page-header {
+  margin-bottom: 32px;
+}
+
+/* 頁面標題 */
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 頁面副標題 */
+.page-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ========================================
+   統計卡片
+   ======================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 自適應欄寬 */
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+/* 統計卡片 */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);               /* 毛玻璃 */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 統計卡片懸停效果 */
+.stat-card:hover {
+  transform: translateY(-4px);               /* 上浮 */
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+/* 統計卡片頂部裝飾線 */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--phase-5), var(--phase-4)); /* 漸層頂線 */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 懸停時顯示頂線 */
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* 統計卡片標籤 */
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* 統計數值 */
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace; /* 等寬字型 */
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* 統計變化指示 */
+.stat-change {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 正向變化（綠色） */
+.stat-change.positive {
+  color: var(--status-pass);
+}
+
+/* 負向變化（紅色） */
+.stat-change.negative {
+  color: var(--status-fail);
+}
+
+/* ========================================
+   Pipeline 流程視覺化
+   ======================================== */
+.pipeline-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 40px;
+  padding: 24px 0;
+  overflow-x: auto;                   /* 水平捲動 */
+}
+
+/* Pipeline 階段卡片 */
+.pipeline-stage {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+
+/* Pipeline 階段懸停 */
+.pipeline-stage:hover {
+  transform: translateY(-6px);         /* 上浮 */
+  box-shadow: var(--shadow-lg);
+}
+
+/* 階段間的連接箭頭 */
+.pipeline-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  position: relative;
+}
+
+/* 箭頭上的流動動畫線 */
+.pipeline-arrow::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--phase-5), transparent); /* 流動漸層 */
+  animation: flowLine 2s linear infinite; /* 流動動畫 */
+}
+
+/* 階段圖標 */
+.stage-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto 14px;
+  position: relative;
+}
+
+/* 階段圖標外圈光暈 */
+.stage-icon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid;
+  opacity: 0.3;
+  animation: pulseRing 3s ease-in-out infinite; /* 光暈脈衝 */
+}
+
+/* 各階段對應色彩 */
+.pipeline-stage[data-phase="1"] .stage-icon { background: var(--phase-1-glow); color: var(--phase-1); }
+.pipeline-stage[data-phase="1"] .stage-icon::after { border-color: var(--phase-1); }
+.pipeline-stage[data-phase="1"]:hover { border-color: var(--phase-1); box-shadow: 0 10px 40px var(--phase-1-glow); }
+
+.pipeline-stage[data-phase="2"] .stage-icon { background: var(--phase-2-glow); color: var(--phase-2); }
+.pipeline-stage[data-phase="2"] .stage-icon::after { border-color: var(--phase-2); }
+.pipeline-stage[data-phase="2"]:hover { border-color: var(--phase-2); box-shadow: 0 10px 40px var(--phase-2-glow); }
+
+.pipeline-stage[data-phase="3"] .stage-icon { background: var(--phase-3-glow); color: var(--phase-3); }
+.pipeline-stage[data-phase="3"] .stage-icon::after { border-color: var(--phase-3); }
+.pipeline-stage[data-phase="3"]:hover { border-color: var(--phase-3); box-shadow: 0 10px 40px var(--phase-3-glow); }
+
+.pipeline-stage[data-phase="4"] .stage-icon { background: var(--phase-4-glow); color: var(--phase-4); }
+.pipeline-stage[data-phase="4"] .stage-icon::after { border-color: var(--phase-4); }
+.pipeline-stage[data-phase="4"]:hover { border-color: var(--phase-4); box-shadow: 0 10px 40px var(--phase-4-glow); }
+
+.pipeline-stage[data-phase="5"] .stage-icon { background: var(--phase-5-glow); color: var(--phase-5); }
+.pipeline-stage[data-phase="5"] .stage-icon::after { border-color: var(--phase-5); }
+.pipeline-stage[data-phase="5"]:hover { border-color: var(--phase-5); box-shadow: 0 10px 40px var(--phase-5-glow); }
+
+/* 階段名稱 */
+.stage-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* 階段描述 */
+.stage-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* 階段狀態標籤 */
+.stage-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* 狀態：通過 */
+.stage-status.passed {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--status-pass);
+}
+
+/* 狀態：失敗 */
+.stage-status.failed {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--status-fail);
+}
+
+/* 狀態：執行中 */
+.stage-status.running {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--status-running);
+}
+
+/* 狀態：等待中 */
+.stage-status.waiting {
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--status-waiting);
+}
+
+/* ========================================
+   玻璃卡片（通用）
+   ======================================== */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 24px;
+}
+
+/* 卡片標題 */
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ========================================
+   資料表格
+   ======================================== */
+.data-table {
+  width: 100%;
+  border-collapse: separate;           /* 分離邊框 */
+  border-spacing: 0 4px;               /* 行間距 */
+}
+
+/* 表頭 */
+.data-table thead th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* 表格列 */
+.data-table tbody tr {
+  background: rgba(30, 41, 59, 0.3);
+  transition: background 0.2s ease;
+}
+
+/* 表格列懸停 */
+.data-table tbody tr:hover {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+/* 表格儲存格 */
+.data-table tbody td {
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+}
+
+/* 第一個儲存格圓角 */
+.data-table tbody td:first-child {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+/* 最後一個儲存格圓角 */
+.data-table tbody td:last-child {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ========================================
+   嚴重性標籤
+   ======================================== */
+.severity-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* 嚴重等級色彩 */
+.severity-badge.critical {
+  background: rgba(220, 38, 38, 0.15);
+  color: var(--severity-critical);
+}
+
+.severity-badge.high {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--severity-high);
+}
+
+.severity-badge.medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--severity-medium);
+}
+
+.severity-badge.low {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--severity-low);
+}
+
+.severity-badge.info {
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--severity-info);
+}
+
+/* ========================================
+   可達性分析視覺化（Phase 3 亮點）
+   ======================================== */
+.reachability-chart {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* 可達 / 不可達對比區塊 */
+.reach-block {
+  flex: 1;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 可達區塊 */
+.reach-block.reachable {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* 不可達區塊 */
+.reach-block.unreachable {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* 區塊內數值 */
+.reach-value {
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* 可達數值色彩 */
+.reach-block.reachable .reach-value {
+  color: var(--severity-high);
+}
+
+/* 不可達數值色彩 */
+.reach-block.unreachable .reach-value {
+  color: var(--status-pass);
+}
+
+/* 區塊標籤 */
+.reach-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* 區塊說明 */
+.reach-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   效能指標（Phase 4）
+   ======================================== */
+.perf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* 效能分數圓環 */
+.perf-score {
+  text-align: center;
+  padding: 20px;
+}
+
+/* 圓環容器 */
+.score-ring {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* 圓環外框（SVG 用 conic-gradient 替代） */
+.score-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(var(--ring-color, var(--phase-5)) calc(var(--score, 0) * 3.6deg), rgba(100, 116, 139, 0.2) 0); /* 扇形進度 */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); /* 鏤空中心 */
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}
+
+/* 分數標籤 */
+.score-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ========================================
+   時間軸（執行歷史）
+   ======================================== */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+/* 時間軸縱線 */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--phase-5), var(--phase-4), transparent); /* 漸層縱線 */
+}
+
+/* 時間軸項目 */
+.timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  transition: all 0.2s ease;
+}
+
+/* 時間軸項目懸停 */
+.timeline-item:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+/* 時間軸節點 */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -27px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--phase-5);
+  border: 2px solid var(--bg-primary);
+}
+
+/* 時間軸標題列 */
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 時間軸標題 */
+.timeline-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* 時間軸時間 */
+.timeline-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* 時間軸內文 */
+.timeline-body {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   長條圖（CSS 純製）
+   ======================================== */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 長條項目 */
+.bar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 長條標籤 */
+.bar-label {
+  width: 80px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* 長條軌道 */
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 長條填充 */
+.bar-fill {
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  transition: width 1s ease-out;              /* 寬度動畫 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* 長條光澤動畫 */
+.bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); /* 光澤 */
+  animation: barShine 3s ease-in-out infinite; /* 光澤動畫 */
+}
+
+/* 長條數值 */
+.bar-value {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  width: 40px;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   Quality Gate 狀態
+   ======================================== */
+.quality-gate {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Quality Gate 圖標 */
+.gate-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+/* Quality Gate 狀態文字 */
+.gate-status {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* 通過狀態 */
+.gate-status.passed {
+  color: var(--status-pass);
+}
+
+/* 失敗狀態 */
+.gate-status.failed {
+  color: var(--status-fail);
+}
+
+/* Gate 說明 */
+.gate-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ========================================
+   按鈕
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+/* 主要按鈕 */
+.btn-primary {
+  background: linear-gradient(135deg, var(--phase-5), var(--phase-4)); /* 藍紫漸層 */
+  color: white;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* 主要按鈕懸停 */
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+}
+
+/* 次要按鈕 */
+.btn-secondary {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+/* ========================================
+   標籤列（Phase 詳細頁面切換）
+   ======================================== */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+/* 標籤項目 */
+.tab-item {
+  flex: 1;
+  padding: 10px 16px;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 標籤選中 */
+.tab-item.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   空狀態
+   ======================================== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+/* 空狀態圖標 */
+.empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* ========================================
+   頁面進入動畫
+   ======================================== */
+.page-enter {
+  animation: pageEnter 0.4s ease-out; /* 頁面淡入上移 */
+}
+
+/* ========================================
+   K6 負載測試指標
+   ======================================== */
+.k6-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* K6 指標卡片 */
+.k6-metric {
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+}
+
+/* K6 指標數值 */
+.k6-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+/* K6 指標標籤 */
+.k6-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ========================================
+   SBOM 套件清單
+   ======================================== */
+.package-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--phase-5);
+}
+
+/* ========================================
+   動畫定義
+   ======================================== */
+
+/* 脈衝動畫 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* 光暈脈衝 */
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.15); opacity: 0.1; }
+}
+
+/* 箭頭流動線 */
+@keyframes flowLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 長條光澤 */
+@keyframes barShine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* 頁面進入 */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 旋轉動畫（載入用） */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   捲軸美化
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* ========================================
+   響應式設計
+   ======================================== */
+
+/* 平板尺寸 */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: var(--sidebar-collapsed); /* 縮小側邊欄 */
+  }
+  .main-content {
+    margin-left: var(--sidebar-collapsed);
+  }
+  /* 隱藏導航文字，只顯示圖標 */
+  .nav-link span,
+  .sidebar-section-title {
+    display: none;
+  }
+  .nav-link {
+    justify-content: center;
+    padding: 12px;
+  }
+  /* Pipeline 卡片縮小 */
+  .pipeline-stage {
+    min-width: 140px;
+    padding: 16px 12px;
+  }
+}
+
+/* 手機尺寸 */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;           /* 隱藏側邊欄 */
+  }
+  .main-content {
+    margin-left: 0;          /* 全寬佈局 */
+    padding: 20px 16px;
+  }
+  /* Pipeline 改為直列 */
+  .pipeline-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pipeline-arrow {
+    transform: rotate(90deg); /* 箭頭轉向 */
+    min-height: 30px;
+    min-width: auto;
+  }
+  /* 可達性改為上下堆疊 */
+  .reachability-chart {
+    flex-direction: column;
+  }
+  /* 統計卡片單欄 */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

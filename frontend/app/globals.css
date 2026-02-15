@@ -1,0 +1,1159 @@
+/* ===== 源碼安全分析平台 — 全域設計系統 ===== */
+
+/* ---------- Google Fonts 引入 ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---------- CSS 變數（暗色主題） ---------- */
+:root {
+  /* 主要背景色 */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1a2035;
+  --bg-card: rgba(17, 24, 39, 0.7);
+  --bg-card-hover: rgba(26, 32, 53, 0.9);
+
+  /* 玻璃擬態效果 */
+  --glass-bg: rgba(17, 24, 39, 0.6);
+  --glass-border: rgba(56, 189, 248, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  /* 強調色系 */
+  --accent-cyan: #22d3ee;
+  --accent-cyan-dim: rgba(34, 211, 238, 0.15);
+  --accent-blue: #3b82f6;
+  --accent-purple: #a78bfa;
+  --accent-teal: #14b8a6;
+
+  /* 風險等級色系 */
+  --risk-critical: #ef4444;
+  --risk-critical-bg: rgba(239, 68, 68, 0.15);
+  --risk-high: #f97316;
+  --risk-high-bg: rgba(249, 115, 22, 0.15);
+  --risk-medium: #eab308;
+  --risk-medium-bg: rgba(234, 179, 8, 0.15);
+  --risk-low: #22c55e;
+  --risk-low-bg: rgba(34, 197, 94, 0.15);
+  --risk-info: #60a5fa;
+  --risk-info-bg: rgba(96, 165, 250, 0.15);
+
+  /* 狀態色系 */
+  --status-success: #22c55e;
+  --status-failure: #ef4444;
+  --status-running: #3b82f6;
+  --status-pending: #6b7280;
+  --status-cancelled: #9ca3af;
+
+  /* 文字色系 */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-accent: #22d3ee;
+
+  /* 邊框與分隔 */
+  --border-default: rgba(148, 163, 184, 0.1);
+  --border-hover: rgba(56, 189, 248, 0.3);
+
+  /* 字型 */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* 圓角 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* 間距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* 側邊欄寬度 */
+  --sidebar-width: 260px;
+  --topbar-height: 64px;
+
+  /* 過渡動畫 */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.4s ease;
+}
+
+/* ---------- 全域重置 ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* 統一盒模型 */
+  margin: 0;
+  /* 移除預設外距 */
+  padding: 0;
+  /* 移除預設內距 */
+}
+
+/* ---------- HTML / Body 基底 ---------- */
+html {
+  font-size: 16px;
+  /* 基準字體大小 */
+  scroll-behavior: smooth;
+  /* 平滑捲動 */
+}
+
+body {
+  font-family: var(--font-sans);
+  /* 主字型 */
+  background: var(--bg-primary);
+  /* 主背景色 */
+  color: var(--text-primary);
+  /* 主文字色 */
+  line-height: 1.6;
+  /* 行高 */
+  -webkit-font-smoothing: antialiased;
+  /* 字型平滑化 */
+  overflow-x: hidden;
+  /* 禁止水平滾動 */
+  min-height: 100vh;
+  /* 最小高度 */
+}
+
+/* ---------- 背景漸層效果 ---------- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(34, 211, 238, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(167, 139, 250, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  /* 不擋互動 */
+  z-index: 0;
+}
+
+/* ---------- 連結樣式 ---------- */
+a {
+  color: var(--accent-cyan);
+  /* 連結顏色 */
+  text-decoration: none;
+  /* 無底線 */
+  transition: color var(--transition-fast);
+  /* 顏色過渡 */
+}
+
+a:hover {
+  color: var(--accent-blue);
+  /* 滑過變色 */
+}
+
+/* ---------- 捲軸樣式 ---------- */
+::-webkit-scrollbar {
+  width: 6px;
+  /* 捲軸寬度 */
+  height: 6px;
+  /* 水平捲軸高度 */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  /* 軌道透明 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  /* 捲軸色 */
+  border-radius: 3px;
+  /* 圓角 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+  /* 滑過變亮 */
+}
+
+/* ---------- 應用程式佈局 ---------- */
+.app-layout {
+  display: flex;
+  /* 水平排列 */
+  min-height: 100vh;
+  /* 最小全高 */
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- 側邊欄 ---------- */
+.sidebar {
+  width: var(--sidebar-width);
+  /* 固定寬度 */
+  height: 100vh;
+  /* 全螢幕高 */
+  position: fixed;
+  /* 固定定位 */
+  left: 0;
+  top: 0;
+  background: var(--glass-bg);
+  /* 玻璃底色 */
+  backdrop-filter: blur(20px);
+  /* 模糊效果 */
+  border-right: 1px solid var(--glass-border);
+  /* 右側邊框 */
+  display: flex;
+  flex-direction: column;
+  /* 垂直排列 */
+  z-index: 100;
+  overflow-y: auto;
+  /* 溢出可捲動 */
+}
+
+/* 側邊欄 Logo 區 */
+.sidebar-logo {
+  padding: var(--spacing-lg) var(--spacing-lg);
+  /* 內距 */
+  border-bottom: 1px solid var(--border-default);
+  /* 底部分隔線 */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  /* 間隙 */
+}
+
+.sidebar-logo .logo-icon {
+  width: 36px;
+  /* 圖示寬 */
+  height: 36px;
+  /* 圖示高 */
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  /* 漸層背景 */
+  border-radius: var(--radius-md);
+  /* 圓角 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  /* 圖示大小 */
+}
+
+.sidebar-logo h1 {
+  font-size: 16px;
+  /* 標題字級 */
+  font-weight: 700;
+  /* 粗體 */
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  /* 漸層文字 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  /* 字間距 */
+}
+
+/* 側邊欄導覽區 */
+.sidebar-nav {
+  padding: var(--spacing-md) var(--spacing-sm);
+  /* 內距 */
+  flex: 1;
+  /* 填滿剩餘空間 */
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  /* 移除項目符號 */
+}
+
+/* 導覽項目連結 */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  /* 間隙 */
+  padding: var(--spacing-md) var(--spacing-md);
+  /* 內距 */
+  margin-bottom: var(--spacing-xs);
+  /* 底部外距 */
+  border-radius: var(--radius-md);
+  /* 圓角 */
+  color: var(--text-secondary);
+  /* 文字色 */
+  font-size: 14px;
+  /* 字級 */
+  font-weight: 500;
+  /* 中等粗細 */
+  transition: all var(--transition-normal);
+  /* 過渡動畫 */
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: var(--accent-cyan-dim);
+  /* 滑過背景 */
+  color: var(--text-primary);
+  /* 滑過文字色 */
+  transform: translateX(4px);
+  /* 微位移效果 */
+}
+
+.nav-item.active {
+  background: var(--accent-cyan-dim);
+  /* 啟用背景 */
+  color: var(--accent-cyan);
+  /* 啟用文字色 */
+  border-left: 3px solid var(--accent-cyan);
+  /* 左側指示線 */
+}
+
+.nav-item .nav-icon {
+  font-size: 18px;
+  /* 圖示大小 */
+  width: 24px;
+  /* 圖示區域寬 */
+  text-align: center;
+}
+
+/* ---------- 主要內容區 ---------- */
+.main-content {
+  margin-left: var(--sidebar-width);
+  /* 左側偏移（側邊欄寬度） */
+  flex: 1;
+  /* 填滿剩餘寬度 */
+  min-height: 100vh;
+  /* 最小全高 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 頂部列 ---------- */
+.topbar {
+  height: var(--topbar-height);
+  /* 固定高度 */
+  padding: 0 var(--spacing-xl);
+  /* 水平內距 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 兩端對齊 */
+  border-bottom: 1px solid var(--border-default);
+  /* 底部分隔線 */
+  background: var(--glass-bg);
+  /* 玻璃底色 */
+  backdrop-filter: blur(10px);
+  /* 模糊效果 */
+  position: sticky;
+  /* 黏性定位 */
+  top: 0;
+  z-index: 50;
+}
+
+.topbar-title {
+  font-size: 18px;
+  /* 字級 */
+  font-weight: 600;
+  /* 半粗 */
+  color: var(--text-primary);
+}
+
+/* 搜尋輸入框 */
+.topbar-search {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--bg-tertiary);
+  /* 背景色 */
+  border: 1px solid var(--border-default);
+  /* 邊框 */
+  border-radius: var(--radius-lg);
+  /* 圓角 */
+  padding: var(--spacing-sm) var(--spacing-md);
+  /* 內距 */
+  transition: border-color var(--transition-fast);
+  /* 邊框過渡 */
+}
+
+.topbar-search:focus-within {
+  border-color: var(--accent-cyan);
+  /* 聚焦時邊框色 */
+}
+
+.topbar-search input {
+  background: none;
+  /* 無背景 */
+  border: none;
+  /* 無邊框 */
+  outline: none;
+  /* 無外框 */
+  color: var(--text-primary);
+  /* 文字色 */
+  font-family: var(--font-sans);
+  /* 字型 */
+  font-size: 14px;
+  /* 字級 */
+  width: 240px;
+  /* 寬度 */
+}
+
+.topbar-search input::placeholder {
+  color: var(--text-muted);
+  /* 佔位文字色 */
+}
+
+/* ---------- 頁面內容容器 ---------- */
+.page-content {
+  padding: var(--spacing-xl);
+  /* 四周內距 */
+  flex: 1;
+  /* 填滿空間 */
+}
+
+/* ---------- 頁面標題 ---------- */
+.page-header {
+  margin-bottom: var(--spacing-xl);
+  /* 底部外距 */
+}
+
+.page-header h2 {
+  font-size: 24px;
+  /* 字級 */
+  font-weight: 700;
+  /* 粗體 */
+  color: var(--text-primary);
+  /* 文字色 */
+  margin-bottom: var(--spacing-xs);
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  /* 描述文字色 */
+  font-size: 14px;
+  /* 字級 */
+}
+
+/* ---------- 玻璃擬態卡片 ---------- */
+.glass-card {
+  background: var(--glass-bg);
+  /* 玻璃底色 */
+  backdrop-filter: blur(16px);
+  /* 模糊效果 */
+  border: 1px solid var(--glass-border);
+  /* 邊框 */
+  border-radius: var(--radius-lg);
+  /* 圓角 */
+  box-shadow: var(--glass-shadow);
+  /* 陰影 */
+  padding: var(--spacing-lg);
+  /* 內距 */
+  transition: all var(--transition-normal);
+  /* 過渡動畫 */
+}
+
+.glass-card:hover {
+  border-color: var(--border-hover);
+  /* 滑過邊框色 */
+  transform: translateY(-2px);
+  /* 上浮效果 */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  /* 加深陰影 */
+}
+
+/* ---------- 統計卡片容器 ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 四欄等分 */
+  gap: var(--spacing-lg);
+  /* 間隙 */
+  margin-bottom: var(--spacing-xl);
+  /* 底部外距 */
+}
+
+/* ---------- 統計卡片 ---------- */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card .stat-icon {
+  font-size: 32px;
+  /* 圖示大小 */
+  margin-bottom: var(--spacing-md);
+}
+
+.stat-card .stat-value {
+  font-size: 28px;
+  /* 數值字級 */
+  font-weight: 700;
+  /* 粗體 */
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-card .stat-label {
+  font-size: 13px;
+  /* 標籤字級 */
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-card .stat-trend {
+  font-size: 12px;
+  /* 趨勢字級 */
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.stat-trend.up {
+  color: var(--status-success);
+  /* 上升＝綠色 */
+}
+
+.stat-trend.down {
+  color: var(--status-failure);
+  /* 下降＝紅色 */
+}
+
+/* 統計卡片裝飾光暈 */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  opacity: 0.05;
+  transition: opacity var(--transition-normal);
+}
+
+.stat-card:hover::after {
+  opacity: 0.1;
+  /* 滑過時光暈變亮 */
+}
+
+/* ---------- 表格樣式 ---------- */
+.data-table {
+  width: 100%;
+  /* 全寬 */
+  border-collapse: collapse;
+  /* 邊框合併 */
+  font-size: 14px;
+  /* 字級 */
+}
+
+.data-table thead th {
+  text-align: left;
+  /* 左對齊 */
+  padding: var(--spacing-md);
+  /* 內距 */
+  color: var(--text-secondary);
+  /* 文字色 */
+  font-weight: 600;
+  /* 半粗 */
+  font-size: 12px;
+  /* 字級 */
+  text-transform: uppercase;
+  /* 全大寫 */
+  letter-spacing: 0.05em;
+  /* 字間距 */
+  border-bottom: 1px solid var(--border-default);
+  /* 底線 */
+}
+
+.data-table tbody tr {
+  transition: background var(--transition-fast);
+  /* 背景過渡 */
+}
+
+.data-table tbody tr:hover {
+  background: var(--bg-card-hover);
+  /* 滑過背景 */
+}
+
+.data-table tbody td {
+  padding: var(--spacing-md);
+  /* 內距 */
+  border-bottom: 1px solid var(--border-default);
+  /* 底線 */
+  color: var(--text-primary);
+  /* 文字色 */
+}
+
+/* ---------- 風險等級標籤 ---------- */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  /* 膠囊形 */
+  font-size: 12px;
+  /* 字級 */
+  font-weight: 600;
+  /* 半粗 */
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.risk-badge.critical {
+  background: var(--risk-critical-bg);
+  color: var(--risk-critical);
+}
+
+.risk-badge.high {
+  background: var(--risk-high-bg);
+  color: var(--risk-high);
+}
+
+.risk-badge.medium {
+  background: var(--risk-medium-bg);
+  color: var(--risk-medium);
+}
+
+.risk-badge.low {
+  background: var(--risk-low-bg);
+  color: var(--risk-low);
+}
+
+.risk-badge.info {
+  background: var(--risk-info-bg);
+  color: var(--risk-info);
+}
+
+/* ---------- 狀態指示燈 ---------- */
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-dot::before {
+  content: '';
+  width: 8px;
+  /* 圓點寬 */
+  height: 8px;
+  /* 圓點高 */
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot.success::before {
+  background: var(--status-success);
+  box-shadow: 0 0 6px var(--status-success);
+}
+
+.status-dot.failure::before {
+  background: var(--status-failure);
+  box-shadow: 0 0 6px var(--status-failure);
+}
+
+.status-dot.running::before {
+  background: var(--status-running);
+  box-shadow: 0 0 6px var(--status-running);
+  animation: pulse 1.5s infinite;
+}
+
+.status-dot.pending::before {
+  background: var(--status-pending);
+}
+
+.status-dot.cancelled::before {
+  background: var(--status-cancelled);
+}
+
+/* ---------- 按鈕樣式 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  /* 漸層背景 */
+  color: var(--bg-primary);
+  box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  /* 上浮 */
+  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.4);
+  /* 加深光暈 */
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-cyan);
+  background: var(--accent-cyan-dim);
+}
+
+/* ---------- 輸入框樣式 ---------- */
+.input-field {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.input-field:focus {
+  border-color: var(--accent-cyan);
+  /* 聚焦邊框色 */
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+  /* 佔位文字色 */
+}
+
+/* ---------- 雙欄並排 ---------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 兩欄等分 */
+  gap: var(--spacing-lg);
+}
+
+/* ---------- 三欄並排 ---------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* 三欄等分 */
+  gap: var(--spacing-lg);
+}
+
+/* ---------- 程式碼文字 ---------- */
+.code-text {
+  font-family: var(--font-mono);
+  /* 等寬字型 */
+  font-size: 13px;
+  /* 字級 */
+  color: var(--accent-cyan);
+  /* 顏色 */
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- 分隔線 ---------- */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-default);
+  margin: var(--spacing-lg) 0;
+}
+
+/* ---------- 動畫定義 ---------- */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  /* 完全不透明 */
+  50% {
+    opacity: 0.4;
+  }
+
+  /* 半透明 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  /* 從下方淡入 */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 到原位 */
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  /* 從左滑入 */
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* 到原位 */
+}
+
+/* 淡入動畫套用類別 */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* 延遲淡入動畫 */
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-4 {
+  animation-delay: 0.4s;
+}
+
+/* ---------- 上傳區域 ---------- */
+.upload-zone {
+  border: 2px dashed var(--border-default);
+  /* 虛線邊框 */
+  border-radius: var(--radius-xl);
+  /* 大圓角 */
+  padding: var(--spacing-2xl);
+  /* 大內距 */
+  text-align: center;
+  /* 置中 */
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--accent-cyan);
+  /* 滑過/拖曳邊框色 */
+  background: var(--accent-cyan-dim);
+  /* 滑過/拖曳背景 */
+}
+
+.upload-zone .upload-icon {
+  font-size: 48px;
+  /* 大圖示 */
+  margin-bottom: var(--spacing-md);
+}
+
+.upload-zone .upload-text {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.upload-zone .upload-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------- Code Flow 樹狀圖 ---------- */
+.flow-tree {
+  padding-left: var(--spacing-lg);
+  /* 左側縮排 */
+}
+
+.flow-node {
+  position: relative;
+  padding: var(--spacing-sm) 0;
+}
+
+.flow-node-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  transition: all var(--transition-fast);
+  cursor: default;
+}
+
+.flow-node-content:hover {
+  border-color: var(--accent-cyan);
+  background: var(--accent-cyan-dim);
+}
+
+/* Code Flow 節點類型 */
+.flow-node-content.entry {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.flow-node-content.process {
+  border-left: 3px solid var(--accent-teal);
+}
+
+.flow-node-content.taint {
+  border-left: 3px solid var(--risk-high);
+}
+
+.flow-node-content.sink {
+  border-left: 3px solid var(--risk-critical);
+}
+
+.flow-children {
+  padding-left: var(--spacing-xl);
+  /* 子節點縮排 */
+  border-left: 1px dashed var(--border-default);
+  /* 連接線 */
+  margin-left: var(--spacing-md);
+}
+
+/* ---------- Pipeline 時間軸 ---------- */
+.pipeline-stages {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.pipeline-stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.pipeline-stage .stage-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.pipeline-stage .stage-indicator.success {
+  background: var(--status-success);
+}
+
+.pipeline-stage .stage-indicator.failure {
+  background: var(--status-failure);
+}
+
+.pipeline-stage .stage-indicator.running {
+  background: var(--status-running);
+  animation: pulse 1.5s infinite;
+}
+
+.pipeline-stage .stage-indicator.pending {
+  background: var(--status-pending);
+}
+
+.pipeline-stage-arrow {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* ---------- 搜尋與篩選列 ---------- */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.filter-bar .filter-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ---------- Quality Gate 標籤 ---------- */
+.quality-gate {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.quality-gate.passed {
+  background: var(--risk-low-bg);
+  color: var(--status-success);
+}
+
+.quality-gate.failed {
+  background: var(--risk-critical-bg);
+  color: var(--status-failure);
+}
+
+.quality-gate.pending {
+  background: rgba(107, 114, 128, 0.15);
+  color: var(--status-pending);
+}
+
+/* ---------- 圓餅圖容器 ---------- */
+.pie-chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+}
+
+.pie-chart {
+  width: 180px;
+  /* 圖表寬 */
+  height: 180px;
+  /* 圖表高 */
+  border-radius: 50%;
+  position: relative;
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.pie-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* ---------- 污染路徑卡片 ---------- */
+.taint-path-card {
+  margin-bottom: var(--spacing-md);
+}
+
+.taint-path-steps {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-sm);
+}
+
+.taint-step {
+  padding: 2px 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.taint-arrow {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* ---------- 選項按鈕群 ---------- */
+.option-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.option-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.option-btn:hover,
+.option-btn.selected {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: var(--accent-cyan-dim);
+}
+
+/* ---------- Section 標題 ---------- */
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ---------- 空狀態提示 ---------- */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* 兩欄 */
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    /* 單欄 */
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    /* 隱藏側邊欄 */
+  }
+
+  .main-content {
+    margin-left: 0;
+    /* 取消偏移 */
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    /* 單欄 */
+  }
+}
