@@ -1327,6 +1327,12 @@ a:hover {
     /* 預設隱藏在左側外 */
     z-index: 200;
     /* 確保在最上層 */
+    height: auto;
+    /* 高度自適應內容，不留底部空白 */
+    min-height: 0;
+    /* 取消最小高度限制 */
+    border-radius: 0 0 var(--radius-lg) 0;
+    /* 右下圓角，視覺更柔和 */
     box-shadow: var(--shadow-lg);
     /* 加陰影層次感 */
   }
@@ -1367,9 +1373,20 @@ a:hover {
     padding: 0 var(--spacing-md);
   }
 
-  /* 搜尋框隱藏（手機上空間不足） */
+  /* 搜尋框：手機上簡化為僅圖示 */
   .topbar-search {
+    padding: 6px;
+    /* 縮小內距 */
+    border-radius: var(--radius-md);
+    /* 圓角 */
+    min-width: 0;
+    /* 不設最小寬度 */
+  }
+
+  /* 搜尋輸入欄隱藏，僅保留圖示 */
+  .topbar-search input {
     display: none;
+    /* 隱藏文字輸入框 */
   }
 
   /* 頁面內距縮小 */
