@@ -19,8 +19,8 @@ export default function PipelinePage() {
                 <p>監控 Jenkins CI/CD Pipeline 的即時執行狀態與歷史紀錄</p>
             </div>
 
-            {/* 統計摘要 */}
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: 'var(--spacing-md)' }}>
+            {/* 統計摘要（使用 CSS class 取代 inline grid） */}
+            <div className="stats-grid">
                 {/* 各狀態統計 */}
                 {[
                     { label: '總 Job 數', value: pipelineJobs.length, color: 'var(--accent-primary)' },
@@ -38,16 +38,11 @@ export default function PipelinePage() {
             {/* Pipeline Job 列表 */}
             {pipelineJobs.map((job) => (
                 <div key={job.id} className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
-                    {/* Job 標頭 */}
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        marginBottom: 'var(--spacing-md)',
-                    }}>
+                    {/* Job 標頭（使用 CSS class 支援手機堆疊） */}
+                    <div className="job-header">
                         {/* 左側：Job 資訊 */}
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-xs)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-xs)', flexWrap: 'wrap' }}>
                                 {/* 狀態指示燈 */}
                                 <span className={`status-dot ${job.status}`}>{job.status}</span>
                                 {/* Job 名稱 */}
@@ -55,8 +50,8 @@ export default function PipelinePage() {
                                 {/* Job ID */}
                                 <span className="code-text">{job.id}</span>
                             </div>
-                            {/* 詳細資訊 */}
-                            <div style={{ display: 'flex', gap: 'var(--spacing-lg)', fontSize: '13px', color: 'var(--text-muted)' }}>
+                            {/* 詳細資訊（使用 CSS class 支援換行） */}
+                            <div className="job-details">
                                 <span>{job.name}</span>
                                 <span>{job.triggeredBy}</span>
                                 <span>{job.duration}</span>

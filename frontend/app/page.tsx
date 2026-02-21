@@ -73,41 +73,44 @@ export default function DashboardPage() {
         {/* 最近掃描紀錄 */}
         <div className="glass-card">
           <div className="section-title">最近掃描紀錄</div>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>專案</th>
-                <th>狀態</th>
-                <th>風險</th>
-                <th>漏洞</th>
-                <th>時間</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* 遍歷掃描紀錄 */}
-              {recentScans.map((scan) => (
-                <tr key={scan.id}>
-                  {/* 專案名稱 + 分支 */}
-                  <td>
-                    <div style={{ fontWeight: 500 }}>{scan.project}</div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{scan.branch}</div>
-                  </td>
-                  {/* 狀態指示燈 */}
-                  <td>
-                    <span className={`status-dot ${scan.status}`}>{scan.status}</span>
-                  </td>
-                  {/* 風險等級標籤 */}
-                  <td>
-                    <span className={`risk-badge ${scan.riskLevel}`}>{scan.riskLevel}</span>
-                  </td>
-                  {/* 漏洞數量 */}
-                  <td>{scan.vulnerabilities}</td>
-                  {/* 掃描時間 */}
-                  <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{scan.date}</td>
+          {/* 表格包裝容器（手機可水平捲動） */}
+          <div className="table-wrapper">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>專案</th>
+                  <th>狀態</th>
+                  <th>風險</th>
+                  <th>漏洞</th>
+                  <th>時間</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {/* 遍歷掃描紀錄 */}
+                {recentScans.map((scan) => (
+                  <tr key={scan.id}>
+                    {/* 專案名稱 + 分支 */}
+                    <td>
+                      <div style={{ fontWeight: 500 }}>{scan.project}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{scan.branch}</div>
+                    </td>
+                    {/* 狀態指示燈 */}
+                    <td>
+                      <span className={`status-dot ${scan.status}`}>{scan.status}</span>
+                    </td>
+                    {/* 風險等級標籤 */}
+                    <td>
+                      <span className={`risk-badge ${scan.riskLevel}`}>{scan.riskLevel}</span>
+                    </td>
+                    {/* 漏洞數量 */}
+                    <td>{scan.vulnerabilities}</td>
+                    {/* 掃描時間 */}
+                    <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{scan.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* 風險等級分佈 */}

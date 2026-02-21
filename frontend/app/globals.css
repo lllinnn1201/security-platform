@@ -186,6 +186,14 @@ a:hover {
   z-index: 100;
   overflow-y: auto;
   /* 溢出可捲動 */
+  transition: transform 0.3s ease;
+  /* 滑入滑出動畫 */
+}
+
+/* ---------- 側邊欄 overlay 遮罩（手機用） ---------- */
+.sidebar-overlay {
+  display: none;
+  /* 桌面版隱藏 */
 }
 
 /* 側邊欄 Logo 區 */
@@ -308,6 +316,8 @@ a:hover {
   /* 最小全高 */
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  /* 防止 flex 子項目溢出 */
 }
 
 /* ---------- 頂部列 ---------- */
@@ -328,6 +338,45 @@ a:hover {
   /* 黏性定位 */
   top: 0;
   z-index: 50;
+}
+
+/* 頂部列左側容器 */
+.topbar-left {
+  display: flex;
+  /* 水平排列 */
+  align-items: center;
+  /* 垂直置中 */
+  gap: var(--spacing-sm);
+  /* 間隙 */
+}
+
+/* 漢堡按鈕（桌面版隱藏） */
+.hamburger-btn {
+  display: none;
+  /* 桌面版隱藏 */
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  /* 按鈕寬 */
+  height: 36px;
+  /* 按鈕高 */
+  border: none;
+  /* 無邊框 */
+  background: none;
+  /* 無背景 */
+  color: var(--text-primary);
+  /* 圖示色 */
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  /* 圓角 */
+  transition: background var(--transition-fast);
+  /* 背景過渡 */
+}
+
+/* 漢堡按鈕滑過 */
+.hamburger-btn:hover {
+  background: var(--bg-secondary);
+  /* 滑過背景 */
 }
 
 /* 頂部列標題 */
@@ -461,6 +510,28 @@ a:hover {
   /* 底部外距 */
 }
 
+/* ---------- 三欄統計卡片 ---------- */
+.stats-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 三欄等分 */
+  gap: var(--spacing-md);
+  /* 間隙 */
+  margin-bottom: var(--spacing-lg);
+  /* 底部外距 */
+}
+
+/* ---------- 五欄統計卡片 ---------- */
+.stats-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  /* 五欄等分 */
+  gap: var(--spacing-md);
+  /* 間隙 */
+  margin-bottom: var(--spacing-lg);
+  /* 底部外距 */
+}
+
 /* ---------- 統計卡片 ---------- */
 .stat-card {
   position: relative;
@@ -528,6 +599,14 @@ a:hover {
   /* 下降＝紅色 */
 }
 
+/* ---------- 表格包裝容器（支援手機水平捲動） ---------- */
+.table-wrapper {
+  overflow-x: auto;
+  /* 水平溢出可捲動 */
+  -webkit-overflow-scrolling: touch;
+  /* iOS 慣性捲動 */
+}
+
 /* ---------- 表格樣式 ---------- */
 .data-table {
   width: 100%;
@@ -536,6 +615,8 @@ a:hover {
   /* 邊框合併 */
   font-size: 14px;
   /* 字級 */
+  min-width: 600px;
+  /* 最小寬度，防止手機壓縮過度 */
 }
 
 /* 表頭 */
@@ -558,6 +639,8 @@ a:hover {
   /* 底線 */
   background: var(--bg-secondary);
   /* 表頭背景 */
+  white-space: nowrap;
+  /* 表頭不換行 */
 }
 
 /* 表格列 */
@@ -595,6 +678,8 @@ a:hover {
   /* 半粗 */
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  white-space: nowrap;
+  /* 不換行 */
 }
 
 /* 各風險等級色 */
@@ -630,6 +715,8 @@ a:hover {
   gap: var(--spacing-sm);
   font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
+  /* 不換行 */
 }
 
 /* 狀態圓點 */
@@ -765,6 +852,8 @@ a:hover {
   background: var(--bg-secondary);
   padding: 2px 6px;
   border-radius: var(--radius-sm);
+  word-break: break-all;
+  /* 長字串可換行 */
 }
 
 /* ---------- 分隔線 ---------- */
@@ -876,6 +965,8 @@ a:hover {
   font-family: var(--font-mono);
   transition: background var(--transition-fast);
   cursor: default;
+  flex-wrap: wrap;
+  /* 手機可換行 */
 }
 
 /* 節點懸停 */
@@ -1012,6 +1103,8 @@ a:hover {
   border-radius: var(--radius-sm);
   font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
+  /* 不換行 */
 }
 
 /* 通過 */
@@ -1048,6 +1141,8 @@ a:hover {
   /* 圖表高 */
   border-radius: 50%;
   position: relative;
+  flex-shrink: 0;
+  /* 不被壓縮 */
 }
 
 /* 環形圖中央遮罩（形成環形） */
@@ -1167,32 +1262,248 @@ a:hover {
   margin-bottom: var(--spacing-md);
 }
 
-/* ---------- 響應式 ---------- */
+/* ---------- Pipeline Job 標頭 ---------- */
+.job-header {
+  display: flex;
+  /* 水平排列 */
+  justify-content: space-between;
+  /* 兩端對齊 */
+  align-items: flex-start;
+  /* 頂部對齊 */
+  margin-bottom: var(--spacing-md);
+  /* 底部外距 */
+  gap: var(--spacing-md);
+  /* 間隙 */
+}
+
+/* Job 詳細資訊列 */
+.job-details {
+  display: flex;
+  /* 水平排列 */
+  gap: var(--spacing-lg);
+  /* 間隙 */
+  font-size: 13px;
+  /* 字級 */
+  color: var(--text-muted);
+  /* 文字色 */
+  flex-wrap: wrap;
+  /* 可換行 */
+}
+
+/* ============================================================ */
+/* ==================== 響應式斷點設計 ========================== */
+/* ============================================================ */
+
+/* ---------- 中螢幕（平板 / 小筆電）---------- */
 @media (max-width: 1200px) {
+
+  /* 統計卡片：四欄 → 兩欄 */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* 兩欄 */
   }
 
+  /* 五欄統計 → 三欄 */
+  .stats-grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* 三欄統計 → 兩欄 */
+  .stats-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 雙欄 → 單欄 */
   .grid-2 {
     grid-template-columns: 1fr;
-    /* 單欄 */
   }
 }
 
+/* ---------- 小螢幕（手機橫放 / 大手機）---------- */
 @media (max-width: 768px) {
+
+  /* 側邊欄：改為 overlay 滑入模式 */
   .sidebar {
-    display: none;
-    /* 隱藏側邊欄 */
+    transform: translateX(-100%);
+    /* 預設隱藏在左側外 */
+    z-index: 200;
+    /* 確保在最上層 */
+    box-shadow: var(--shadow-lg);
+    /* 加陰影層次感 */
   }
 
+  /* 側邊欄開啟狀態 */
+  .sidebar.sidebar--open {
+    transform: translateX(0);
+    /* 滑入畫面 */
+  }
+
+  /* overlay 遮罩顯示 */
+  .sidebar-overlay {
+    display: block;
+    /* 顯示遮罩 */
+    position: fixed;
+    /* 固定定位 */
+    inset: 0;
+    /* 鋪滿全螢幕 */
+    background: rgba(0, 0, 0, 0.4);
+    /* 半透明黑 */
+    z-index: 150;
+    /* 在側邊欄下方 */
+  }
+
+  /* 主要內容區：取消左側偏移 */
   .main-content {
     margin-left: 0;
-    /* 取消偏移 */
   }
 
+  /* 漢堡按鈕顯示 */
+  .hamburger-btn {
+    display: flex;
+    /* 手機版顯示 */
+  }
+
+  /* 頂部列內距縮小 */
+  .topbar {
+    padding: 0 var(--spacing-md);
+  }
+
+  /* 搜尋框隱藏（手機上空間不足） */
+  .topbar-search {
+    display: none;
+  }
+
+  /* 頁面內距縮小 */
+  .page-content {
+    padding: var(--spacing-md);
+  }
+
+  /* 頁面主標題縮小 */
+  .page-header h2 {
+    font-size: 18px;
+  }
+
+  /* 統計卡片：單欄 */
   .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 五欄統計 → 兩欄 */
+  .stats-grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 三欄統計 → 單欄 */
+  .stats-grid-3 {
     grid-template-columns: 1fr;
-    /* 單欄 */
+  }
+
+  /* 卡片內距縮小 */
+  .glass-card {
+    padding: var(--spacing-md);
+  }
+
+  /* 環形圖垂直排列 */
+  .pie-chart-container {
+    flex-direction: column;
+  }
+
+  /* 環形圖縮小 */
+  .pie-chart {
+    width: 130px;
+    height: 130px;
+  }
+
+  /* 環形圖中央遮罩縮小 */
+  .pie-chart::after {
+    width: 72px;
+    height: 72px;
+  }
+
+  /* 圖例改水平排列 */
+  .pie-legend {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+
+  /* 上傳區內距縮小 */
+  .upload-zone {
+    padding: var(--spacing-lg);
+  }
+
+  /* Pipeline Job 標頭改為垂直堆疊 */
+  .job-header {
+    flex-direction: column;
+  }
+
+  /* Code Flow 子節點縮排縮小 */
+  .flow-children {
+    padding-left: var(--spacing-md);
+    margin-left: var(--spacing-sm);
+  }
+
+  /* 篩選列垂直排列 */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 篩選輸入框全寬 */
+  .filter-bar .filter-input {
+    min-width: 0;
+  }
+}
+
+/* ---------- 極小螢幕（手機直立）---------- */
+@media (max-width: 480px) {
+
+  /* 頁面內距更小 */
+  .page-content {
+    padding: var(--spacing-sm);
+  }
+
+  /* 頁面標題更小 */
+  .page-header h2 {
+    font-size: 16px;
+  }
+
+  /* 頁面副標題更小 */
+  .page-header p {
+    font-size: 12px;
+  }
+
+  /* 統計卡片：全部單欄 */
+  .stats-grid,
+  .stats-grid-3,
+  .stats-grid-5 {
+    grid-template-columns: 1fr;
+  }
+
+  /* 環形圖進一步縮小 */
+  .pie-chart {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* 環形圖遮罩進一步縮小 */
+  .pie-chart::after {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* 選項按鈕群全寬 */
+  .option-group {
+    flex-direction: column;
+  }
+
+  /* 選項按鈕全寬 */
+  .option-btn {
+    width: 100%;
+  }
+
+  /* 上傳區內距最小 */
+  .upload-zone {
+    padding: var(--spacing-md);
   }
 }

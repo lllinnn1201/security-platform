@@ -36,8 +36,8 @@ export default function SBOMPage() {
                 <p>Software Bill of Materials — 瀏覽專案的依賴套件與已知漏洞</p>
             </div>
 
-            {/* 統計摘要 */}
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--spacing-md)' }}>
+            {/* 統計摘要（使用 CSS class 取代 inline grid） */}
+            <div className="stats-grid-3">
                 {/* 總套件數 */}
                 <div className="glass-card" style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--accent-primary)' }}>{totalPkgs}</div>
@@ -59,7 +59,7 @@ export default function SBOMPage() {
             <div className="glass-card">
                 <div className="filter-bar">
                     {/* 搜尋輸入框 */}
-                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
+                    <div style={{ position: 'relative', flex: 1, minWidth: '0' }}>
                         <Search size={14} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                         <input
                             type="text"
@@ -84,69 +84,71 @@ export default function SBOMPage() {
                     </div>
                 </div>
 
-                {/* 套件清單表格 */}
-                <table className="data-table">
-                    <thead>
-                        <tr>
-                            <th>套件名稱</th>
-                            <th>版本</th>
-                            <th>授權</th>
-                            <th>生態系</th>
-                            <th>漏洞數</th>
-                            <th>風險等級</th>
-                            <th>CVE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* 遍歷篩選後的套件 */}
-                        {filtered.map((pkg) => (
-                            <tr key={pkg.name}>
-                                {/* 套件名稱 */}
-                                <td style={{ fontWeight: 600 }}>{pkg.name}</td>
-                                {/* 版本號 */}
-                                <td>
-                                    <span className="code-text">{pkg.version}</span>
-                                </td>
-                                {/* 授權類型 */}
-                                <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{pkg.license}</td>
-                                {/* 生態系標籤 */}
-                                <td>
-                                    <span style={{
-                                        padding: '2px 8px',
-                                        background: 'var(--accent-primary-light)',
-                                        borderRadius: 'var(--radius-sm)',
-                                        fontSize: '11px',
-                                        color: 'var(--accent-primary)',
-                                        fontWeight: 600,
-                                    }}>
-                                        {pkg.ecosystem}
-                                    </span>
-                                </td>
-                                {/* 漏洞數量 */}
-                                <td>
-                                    <span style={{
-                                        fontWeight: 600,
-                                        color: pkg.vulnerabilities > 0 ? 'var(--risk-high)' : 'var(--status-success)',
-                                    }}>
-                                        {pkg.vulnerabilities}
-                                    </span>
-                                </td>
-                                {/* 風險等級標籤 */}
-                                <td>
-                                    <span className={`risk-badge ${pkg.riskLevel}`}>{pkg.riskLevel}</span>
-                                </td>
-                                {/* CVE 編號 */}
-                                <td>
-                                    {pkg.cve ? (
-                                        <span className="code-text" style={{ color: 'var(--risk-critical)' }}>{pkg.cve}</span>
-                                    ) : (
-                                        <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>—</span>
-                                    )}
-                                </td>
+                {/* 套件清單表格（包裝容器支援手機水平捲動） */}
+                <div className="table-wrapper">
+                    <table className="data-table">
+                        <thead>
+                            <tr>
+                                <th>套件名稱</th>
+                                <th>版本</th>
+                                <th>授權</th>
+                                <th>生態系</th>
+                                <th>漏洞數</th>
+                                <th>風險等級</th>
+                                <th>CVE</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {/* 遍歷篩選後的套件 */}
+                            {filtered.map((pkg) => (
+                                <tr key={pkg.name}>
+                                    {/* 套件名稱 */}
+                                    <td style={{ fontWeight: 600 }}>{pkg.name}</td>
+                                    {/* 版本號 */}
+                                    <td>
+                                        <span className="code-text">{pkg.version}</span>
+                                    </td>
+                                    {/* 授權類型 */}
+                                    <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{pkg.license}</td>
+                                    {/* 生態系標籤 */}
+                                    <td>
+                                        <span style={{
+                                            padding: '2px 8px',
+                                            background: 'var(--accent-primary-light)',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontSize: '11px',
+                                            color: 'var(--accent-primary)',
+                                            fontWeight: 600,
+                                        }}>
+                                            {pkg.ecosystem}
+                                        </span>
+                                    </td>
+                                    {/* 漏洞數量 */}
+                                    <td>
+                                        <span style={{
+                                            fontWeight: 600,
+                                            color: pkg.vulnerabilities > 0 ? 'var(--risk-high)' : 'var(--status-success)',
+                                        }}>
+                                            {pkg.vulnerabilities}
+                                        </span>
+                                    </td>
+                                    {/* 風險等級標籤 */}
+                                    <td>
+                                        <span className={`risk-badge ${pkg.riskLevel}`}>{pkg.riskLevel}</span>
+                                    </td>
+                                    {/* CVE 編號 */}
+                                    <td>
+                                        {pkg.cve ? (
+                                            <span className="code-text" style={{ color: 'var(--risk-critical)' }}>{pkg.cve}</span>
+                                        ) : (
+                                            <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>—</span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
                 {/* 顯示筆數 */}
                 <div style={{

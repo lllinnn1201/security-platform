@@ -24,13 +24,19 @@ const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
     'play-circle': PlayCircle,
 };
 
+// 側邊欄元件 props 型別
+interface SidebarProps {
+    isOpen: boolean;   // 手機版是否開啟
+    onClose: () => void; // 關閉回呼
+}
+
 // 側邊欄元件
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     // 取得當前路由路徑
     const pathname = usePathname();
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
             {/* Logo 區域 */}
             <div className="sidebar-logo">
                 <div className="logo-icon">
@@ -52,6 +58,7 @@ export default function Sidebar() {
                                 <Link
                                     href={item.href}
                                     className={`nav-item ${pathname === item.href ? 'active' : ''}`}
+                                    onClick={onClose}
                                 >
                                     {/* SVG 圖示 */}
                                     <span className="nav-icon">
