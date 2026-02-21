@@ -1490,11 +1490,11 @@ a:hover {
     font-size: 12px;
   }
 
-  /* 統計卡片：全部單欄 */
+  /* 統計卡片：保持兩欄（符合使用者期望的手機版設計） */
   .stats-grid,
   .stats-grid-3,
   .stats-grid-5 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* 環形圖進一步縮小 */
