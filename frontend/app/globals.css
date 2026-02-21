@@ -619,6 +619,29 @@ a:hover {
   /* 水平溢出可捲動 */
   -webkit-overflow-scrolling: touch;
   /* iOS 慣性捲動 */
+  position: relative;
+  border-radius: var(--radius-md);
+}
+
+/* 捲動陰影提示：暗示右側還有內容 */
+.table-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.05), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@media (max-width: 768px) {
+  .table-wrapper::after {
+    opacity: 1;
+    /* 手機版顯示陰影提示 */
+  }
 }
 
 /* ---------- 表格樣式 ---------- */
@@ -1553,7 +1576,13 @@ a:hover {
 
   /* 極小螢幕下的表格最小寬度 */
   .data-table {
-    min-width: 450px;
+    min-width: 400px;
+    /* 從 450px 下調，減少極小螢幕的捲動壓力 */
+  }
+
+  /* 移動端隱藏特定欄位工具 */
+  .mobile-hide {
+    display: none !important;
   }
 
   /* 選項按鈕群全寬 */

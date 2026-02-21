@@ -82,7 +82,7 @@ export default function DashboardPage() {
                   <th>狀態</th>
                   <th>風險</th>
                   <th>漏洞</th>
-                  <th>時間</th>
+                  <th className="mobile-hide">時間</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,7 +105,9 @@ export default function DashboardPage() {
                     {/* 漏洞數量 */}
                     <td>{scan.vulnerabilities}</td>
                     {/* 掃描時間 */}
-                    <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{scan.date}</td>
+                    <td className="mobile-hide" style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                      {scan.date}
+                    </td>
                   </tr>
                 ))}
               </tbody>
