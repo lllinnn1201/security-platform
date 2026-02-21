@@ -4,6 +4,16 @@
 // 支援拖拉上傳與 Git Repo URL 輸入
 
 import { useState } from 'react'; // React 狀態鉤子
+import {
+    FolderOpen,   // 檔案夾圖示
+    Link2,        // 連結圖示
+    Settings,     // 設定圖示
+    FileCode,     // 程式碼檔圖示
+    ArrowRight,   // 箭頭圖示
+    UploadCloud,  // 上傳雲圖示
+    X,            // 關閉圖示
+    ClipboardList, // 清單圖示
+} from 'lucide-react';
 
 // 程式碼上傳頁面元件
 export default function UploadPage() {
@@ -56,7 +66,7 @@ export default function UploadPage() {
         <div className="animate-fade-in">
             {/* 頁面標題 */}
             <div className="page-header">
-                <h2>📤 程式碼上傳</h2>
+                <h2>程式碼上傳</h2>
                 <p>上傳程式碼或輸入 Git Repository URL 以觸發安全分析</p>
             </div>
 
@@ -64,8 +74,11 @@ export default function UploadPage() {
                 {/* 左側：上傳方式 */}
                 <div>
                     {/* 拖拉上傳區 */}
-                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                        <div className="section-title">📁 檔案上傳</div>
+                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
+                        <div className="section-title">
+                            <FolderOpen size={16} />
+                            檔案上傳
+                        </div>
                         <div
                             className={`upload-zone ${isDragOver ? 'drag-over' : ''}`}
                             onDragOver={handleDragOver}
@@ -73,7 +86,9 @@ export default function UploadPage() {
                             onDrop={handleDrop}
                         >
                             {/* 上傳圖示 */}
-                            <div className="upload-icon">📂</div>
+                            <div className="upload-icon">
+                                <UploadCloud size={40} />
+                            </div>
                             {/* 上傳說明 */}
                             <div className="upload-text">拖拉檔案至此處，或點擊選擇檔案</div>
                             <div className="upload-hint">支援 .zip、.tar.gz 或單一原始碼檔案，最大 100MB</div>
@@ -88,13 +103,17 @@ export default function UploadPage() {
                                         display: 'flex',
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
-                                        padding: 'var(--spacing-sm) var(--spacing-md)',
-                                        background: 'var(--bg-tertiary)',
+                                        padding: '8px 12px',
+                                        background: 'var(--bg-secondary)',
                                         borderRadius: 'var(--radius-sm)',
                                         marginBottom: 'var(--spacing-xs)',
                                         fontSize: '13px',
                                     }}>
-                                        <span className="code-text">📄 {file}</span>
+                                        {/* 檔案名稱 */}
+                                        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            <FileCode size={14} style={{ color: 'var(--text-muted)' }} />
+                                            <span className="code-text">{file}</span>
+                                        </span>
                                         {/* 移除按鈕 */}
                                         <button
                                             onClick={() => setFiles((prev) => prev.filter((_, i) => i !== index))}
@@ -103,10 +122,11 @@ export default function UploadPage() {
                                                 border: 'none',
                                                 color: 'var(--text-muted)',
                                                 cursor: 'pointer',
-                                                fontSize: '16px',
+                                                padding: '2px',
+                                                display: 'flex',
                                             }}
                                         >
-                                            ✕
+                                            <X size={14} />
                                         </button>
                                     </div>
                                 ))}
@@ -116,7 +136,10 @@ export default function UploadPage() {
 
                     {/* Git Repo URL 輸入 */}
                     <div className="glass-card">
-                        <div className="section-title">🔗 Git Repository</div>
+                        <div className="section-title">
+                            <Link2 size={16} />
+                            Git Repository
+                        </div>
                         <input
                             type="text"
                             className="input-field"
@@ -137,15 +160,18 @@ export default function UploadPage() {
                 {/* 右側：分析設定 */}
                 <div>
                     {/* 分析類型選擇 */}
-                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                        <div className="section-title">⚙️ 分析類型</div>
+                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
+                        <div className="section-title">
+                            <Settings size={16} />
+                            分析類型
+                        </div>
                         <div className="option-group">
                             {/* 四個分析選項 */}
                             {[
-                                { key: 'all', label: '🔄 全部掃描', desc: 'SAST + SBOM + 漏洞' },
-                                { key: 'sast', label: '🔍 SAST 靜態分析', desc: 'SonarQube 掃描' },
-                                { key: 'sbom', label: '📋 SBOM 產生', desc: 'Syft 依賴分析' },
-                                { key: 'vuln', label: '🛡️ 漏洞掃描', desc: 'Grype CVE 比對' },
+                                { key: 'all', label: '全部掃描', desc: 'SAST + SBOM + 漏洞' },
+                                { key: 'sast', label: 'SAST 靜態分析', desc: 'SonarQube 掃描' },
+                                { key: 'sbom', label: 'SBOM 產生', desc: 'Syft 依賴分析' },
+                                { key: 'vuln', label: '漏洞掃描', desc: 'Grype CVE 比對' },
                             ].map((option) => (
                                 <button
                                     key={option.key}
@@ -161,14 +187,17 @@ export default function UploadPage() {
                     </div>
 
                     {/* 分析摘要 */}
-                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                        <div className="section-title">📝 掃描摘要</div>
+                    <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
+                        <div className="section-title">
+                            <ClipboardList size={16} />
+                            掃描摘要
+                        </div>
                         <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
                             {/* 上傳來源 */}
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                padding: 'var(--spacing-sm) 0',
+                                padding: '8px 0',
                                 borderBottom: '1px solid var(--border-default)',
                             }}>
                                 <span>上傳來源</span>
@@ -180,7 +209,7 @@ export default function UploadPage() {
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                padding: 'var(--spacing-sm) 0',
+                                padding: '8px 0',
                                 borderBottom: '1px solid var(--border-default)',
                             }}>
                                 <span>分析類型</span>
@@ -192,7 +221,7 @@ export default function UploadPage() {
                             <div style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                padding: 'var(--spacing-sm) 0',
+                                padding: '8px 0',
                             }}>
                                 <span>預估時間</span>
                                 <span style={{ color: 'var(--text-primary)' }}>
@@ -203,8 +232,9 @@ export default function UploadPage() {
                     </div>
 
                     {/* 提交按鈕 */}
-                    <button className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>
-                        🚀 開始分析
+                    <button className="btn btn-primary" style={{ width: '100%', padding: '12px' }}>
+                        <ArrowRight size={16} />
+                        開始分析
                     </button>
                 </div>
             </div>

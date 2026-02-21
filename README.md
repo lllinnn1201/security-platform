@@ -28,7 +28,7 @@ frontend/                    # Next.js 前端應用
 |------|------|
 | 框架 | Next.js 16 (App Router) |
 | 語言 | TypeScript |
-| 樣式 | Vanilla CSS (暗色主題) |
+| 樣式 | Vanilla CSS (亮色主題) |
 | 字型 | Inter + JetBrains Mono |
 
 ## 頁面說明

@@ -9,7 +9,7 @@ export default function ReportsPage() {
         <div className="animate-fade-in">
             {/* 頁面標題 */}
             <div className="page-header">
-                <h2>📝 分析報告</h2>
+                <h2>分析報告</h2>
                 <p>檢視最近一次掃描的安全漏洞與程式碼品質問題</p>
             </div>
 
@@ -26,7 +26,7 @@ export default function ReportsPage() {
                     <div key={item.label} className="glass-card" style={{ textAlign: 'center' }}>
                         {/* 數量 */}
                         <div style={{
-                            fontSize: '32px',
+                            fontSize: '28px',
                             fontWeight: 700,
                             color: `var(--risk-${item.cls})`,
                             marginBottom: 'var(--spacing-xs)',
@@ -34,14 +34,14 @@ export default function ReportsPage() {
                             {item.count}
                         </div>
                         {/* 標籤 */}
-                        <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{item.label}</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{item.label}</div>
                     </div>
                 ))}
             </div>
 
             {/* 安全漏洞清單 */}
-            <div className="glass-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <div className="section-title">🛡️ 安全漏洞清單</div>
+            <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
+                <div className="section-title">安全漏洞清單</div>
                 <table className="data-table">
                     <thead>
                         <tr>
@@ -87,7 +87,7 @@ export default function ReportsPage() {
 
             {/* Code Smell 清單 */}
             <div className="glass-card">
-                <div className="section-title">🧹 Code Smell</div>
+                <div className="section-title">Code Smell</div>
                 <table className="data-table">
                     <thead>
                         <tr>

@@ -5,6 +5,7 @@
 
 import { useState } from 'react';               // React 狀態鉤子
 import { sbomPackages } from '@/data/mockData'; // 匯入 mock 資料
+import { Search } from 'lucide-react';          // 搜尋圖示
 
 // SBOM 檢視器頁面元件
 export default function SBOMPage() {
@@ -31,26 +32,26 @@ export default function SBOMPage() {
         <div className="animate-fade-in">
             {/* 頁面標題 */}
             <div className="page-header">
-                <h2>📋 SBOM 檢視器</h2>
+                <h2>SBOM 檢視器</h2>
                 <p>Software Bill of Materials — 瀏覽專案的依賴套件與已知漏洞</p>
             </div>
 
             {/* 統計摘要 */}
-            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--spacing-lg)' }}>
+            <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--spacing-md)' }}>
                 {/* 總套件數 */}
                 <div className="glass-card" style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--accent-cyan)' }}>{totalPkgs}</div>
-                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>依賴套件總數</div>
+                    <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--accent-primary)' }}>{totalPkgs}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>依賴套件總數</div>
                 </div>
                 {/* 有漏洞的套件 */}
                 <div className="glass-card" style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--risk-high)' }}>{vulnPkgs}</div>
-                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>含漏洞套件</div>
+                    <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--risk-high)' }}>{vulnPkgs}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>含漏洞套件</div>
                 </div>
                 {/* 總漏洞數 */}
                 <div className="glass-card" style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--risk-critical)' }}>{totalVulns}</div>
-                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>已知漏洞總數</div>
+                    <div style={{ fontSize: '26px', fontWeight: 700, color: 'var(--risk-critical)' }}>{totalVulns}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>已知漏洞總數</div>
                 </div>
             </div>
 
@@ -58,13 +59,17 @@ export default function SBOMPage() {
             <div className="glass-card">
                 <div className="filter-bar">
                     {/* 搜尋輸入框 */}
-                    <input
-                        type="text"
-                        className="input-field filter-input"
-                        placeholder="🔍 搜尋套件名稱..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
+                        <Search size={14} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                        <input
+                            type="text"
+                            className="input-field filter-input"
+                            style={{ paddingLeft: '34px' }}
+                            placeholder="搜尋套件名稱..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
                     {/* 風險等級篩選按鈕 */}
                     <div className="option-group">
                         {['all', 'critical', 'high', 'medium', 'low', 'info'].map((level) => (
@@ -108,10 +113,10 @@ export default function SBOMPage() {
                                 <td>
                                     <span style={{
                                         padding: '2px 8px',
-                                        background: 'var(--accent-cyan-dim)',
-                                        borderRadius: '999px',
+                                        background: 'var(--accent-primary-light)',
+                                        borderRadius: 'var(--radius-sm)',
                                         fontSize: '11px',
-                                        color: 'var(--accent-cyan)',
+                                        color: 'var(--accent-primary)',
                                         fontWeight: 600,
                                     }}>
                                         {pkg.ecosystem}

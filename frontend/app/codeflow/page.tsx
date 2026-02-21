@@ -4,19 +4,22 @@
 import { codeFlowTree, taintPaths } from '@/data/mockData'; // 匯入 mock 資料
 import type { FlowNode } from '@/data/mockData';             // 匯入型別
 
+// 節點類型標籤對照表
+const typeLabels: Record<string, string> = {
+    entry: 'Entry',
+    process: 'Process',
+    taint: 'Taint',
+    sink: 'Sink',
+};
+
 // 遞迴渲染單一節點與其子節點的函式
 function FlowNodeComponent({ node }: { node: FlowNode }) {
     return (
         <div className="flow-node">
             {/* 節點內容 */}
             <div className={`flow-node-content ${node.type}`}>
-                {/* 節點類型圖示 */}
-                <span>
-                    {node.type === 'entry' && '🟦'}
-                    {node.type === 'process' && '🟩'}
-                    {node.type === 'taint' && '🟧'}
-                    {node.type === 'sink' && '🟥'}
-                </span>
+                {/* 節點類型色點 */}
+                <span className={`flow-type-dot ${node.type}`} />
                 {/* 函式名稱 */}
                 <span>{node.name}</span>
                 {/* 所在檔案 */}
@@ -41,23 +44,24 @@ export default function CodeFlowPage() {
         <div className="animate-fade-in">
             {/* 頁面標題 */}
             <div className="page-header">
-                <h2>🔀 Code Flow 視覺化</h2>
+                <h2>Code Flow 視覺化</h2>
                 <p>追蹤程式碼的函式呼叫路徑與資料流向</p>
             </div>
 
             {/* 圖例說明 */}
-            <div className="glass-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <div className="section-title">🏷️ 節點類型圖例</div>
+            <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
+                <div className="section-title">節點類型圖例</div>
                 <div style={{ display: 'flex', gap: 'var(--spacing-xl)', flexWrap: 'wrap' }}>
                     {/* 遍歷渲染每個節點類型說明 */}
                     {[
-                        { icon: '🟦', label: 'Entry（進入點）', desc: '函式呼叫的起始位置' },
-                        { icon: '🟩', label: 'Process（處理）', desc: '中間處理邏輯' },
-                        { icon: '🟧', label: 'Taint（污染）', desc: '可能存在安全風險的節點' },
-                        { icon: '🟥', label: 'Sink（終點）', desc: '危險操作的最終執行點' },
+                        { type: 'entry', label: 'Entry（進入點）', desc: '函式呼叫的起始位置' },
+                        { type: 'process', label: 'Process（處理）', desc: '中間處理邏輯' },
+                        { type: 'taint', label: 'Taint（污染）', desc: '可能存在安全風險的節點' },
+                        { type: 'sink', label: 'Sink（終點）', desc: '危險操作的最終執行點' },
                     ].map((item) => (
                         <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
-                            <span style={{ fontSize: '20px' }}>{item.icon}</span>
+                            {/* 色點 */}
+                            <span className={`flow-type-dot ${item.type}`} style={{ width: '10px', height: '10px' }} />
                             <div>
                                 {/* 類型標籤 */}
                                 <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{item.label}</div>
@@ -72,7 +76,7 @@ export default function CodeFlowPage() {
             <div className="grid-2">
                 {/* 左側：函式呼叫樹 */}
                 <div className="glass-card">
-                    <div className="section-title">🌲 函式呼叫樹</div>
+                    <div className="section-title">函式呼叫樹</div>
                     <div className="flow-tree">
                         {/* 從根節點開始渲染 */}
                         <FlowNodeComponent node={codeFlowTree} />
@@ -81,12 +85,12 @@ export default function CodeFlowPage() {
 
                 {/* 右側：污染路徑追蹤 */}
                 <div className="glass-card">
-                    <div className="section-title">⚠️ 污染路徑追蹤</div>
+                    <div className="section-title">污染路徑追蹤</div>
                     {/* 遍歷每條污染路徑 */}
                     {taintPaths.map((path) => (
                         <div key={path.id} className="taint-path-card" style={{
                             padding: 'var(--spacing-md)',
-                            background: 'var(--bg-tertiary)',
+                            background: 'var(--bg-secondary)',
                             borderRadius: 'var(--radius-md)',
                             marginBottom: 'var(--spacing-md)',
                             borderLeft: `3px solid var(--risk-${path.severity})`,

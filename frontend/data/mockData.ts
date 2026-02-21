@@ -13,17 +13,17 @@ export type PipelineStatus = 'success' | 'failure' | 'running' | 'pending' | 'ca
 export interface StatCard {
     label: string;      // 卡片標題
     value: string;      // 數值
-    icon: string;       // 圖示 emoji
+    icon: string;       // 圖示名稱（對應 Lucide 圖示）
     trend: string;      // 趨勢文字
     trendUp: boolean;   // 趨勢方向
 }
 
 // Dashboard 統計卡片 mock
 export const dashboardStats: StatCard[] = [
-    { label: '總掃描次數', value: '1,284', icon: '🔍', trend: '+12%', trendUp: true },
-    { label: '發現漏洞數', value: '347', icon: '🛡️', trend: '-8%', trendUp: false },
-    { label: '安全評分', value: '82.5', icon: '📊', trend: '+3.2', trendUp: true },
-    { label: 'SBOM 數量', value: '56', icon: '📋', trend: '+5', trendUp: true },
+    { label: '總掃描次數', value: '1,284', icon: 'scan', trend: '+12%', trendUp: true },
+    { label: '發現漏洞數', value: '347', icon: 'shield', trend: '-8%', trendUp: false },
+    { label: '安全評分', value: '82.5', icon: 'activity', trend: '+3.2', trendUp: true },
+    { label: 'SBOM 數量', value: '56', icon: 'package', trend: '+5', trendUp: true },
 ];
 
 // ---------- 最近掃描紀錄 ----------
@@ -51,16 +51,16 @@ export const recentScans: ScanRecord[] = [
 export interface RiskDistribution {
     level: RiskLevel;   // 風險等級
     count: number;      // 數量
-    color: string;      // 對應顏色
+    color: string;      // 對應顏色（低飽和度專業色）
 }
 
 // 風險等級分佈 mock
 export const riskDistribution: RiskDistribution[] = [
-    { level: 'critical', count: 8, color: '#ff4757' },
-    { level: 'high', count: 23, color: '#ff6b35' },
-    { level: 'medium', count: 45, color: '#ffa502' },
-    { level: 'low', count: 156, color: '#2ed573' },
-    { level: 'info', count: 115, color: '#70a1ff' },
+    { level: 'critical', count: 8, color: '#dc2626' },
+    { level: 'high', count: 23, color: '#ea580c' },
+    { level: 'medium', count: 45, color: '#ca8a04' },
+    { level: 'low', count: 156, color: '#16a34a' },
+    { level: 'info', count: 115, color: '#2563eb' },
 ];
 
 // ---------- 分析報告詳細 ----------
@@ -328,15 +328,15 @@ export const pipelineJobs: PipelineJob[] = [
 export interface NavItem {
     label: string;   // 顯示名稱
     href: string;    // 路由路徑
-    icon: string;    // 圖示 emoji
+    icon: string;    // 圖示名稱（對應 Lucide 圖示）
 }
 
 // 側邊欄導覽 mock
 export const navItems: NavItem[] = [
-    { label: '儀表板', href: '/', icon: '📊' },
-    { label: '程式碼上傳', href: '/upload', icon: '📤' },
-    { label: '分析報告', href: '/reports', icon: '📝' },
-    { label: 'Code Flow', href: '/codeflow', icon: '🔀' },
-    { label: 'SBOM 檢視器', href: '/sbom', icon: '📋' },
-    { label: 'Pipeline', href: '/pipeline', icon: '🚦' },
+    { label: '儀表板', href: '/', icon: 'layout-dashboard' },
+    { label: '程式碼上傳', href: '/upload', icon: 'upload' },
+    { label: '分析報告', href: '/reports', icon: 'file-text' },
+    { label: 'Code Flow', href: '/codeflow', icon: 'git-branch' },
+    { label: 'SBOM 檢視器', href: '/sbom', icon: 'list' },
+    { label: 'Pipeline', href: '/pipeline', icon: 'play-circle' },
 ];
