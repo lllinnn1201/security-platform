@@ -1410,7 +1410,7 @@ a:hover {
 
   /* 頁面內距縮小 */
   .page-content {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 
   /* 頁面主標題縮小 */
@@ -1418,14 +1418,16 @@ a:hover {
     font-size: 18px;
   }
 
-  /* 統計卡片：單欄 */
+  /* 統計卡片：兩欄 */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
   }
 
   /* 五欄統計 → 兩欄 */
   .stats-grid-5 {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
   }
 
   /* 三欄統計 → 單欄 */
@@ -1438,9 +1440,24 @@ a:hover {
     padding: var(--spacing-md);
   }
 
+  /* 表格樣式微調 */
+  .data-table {
+    min-width: 500px;
+    /* 下調最小寬度，減少深層滑動 */
+    font-size: 13px;
+    /* 稍微縮小字級 */
+  }
+
+  .data-table thead th,
+  .data-table tbody td {
+    padding: 10px var(--spacing-sm);
+    /* 縮小儲存格內距 */
+  }
+
   /* 環形圖垂直排列 */
   .pie-chart-container {
     flex-direction: column;
+    gap: var(--spacing-lg);
   }
 
   /* 環形圖縮小 */
@@ -1455,12 +1472,18 @@ a:hover {
     height: 72px;
   }
 
-  /* 圖例改水平排列 */
+  /* 圖例改為流式排列並置中 */
   .pie-legend {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm) var(--spacing-md);
+    width: 100%;
+  }
+
+  /* 圖例項目不換行 */
+  .pie-legend-item {
+    white-space: nowrap;
   }
 
   /* 上傳區內距縮小 */
@@ -1526,6 +1549,11 @@ a:hover {
   .pie-chart::after {
     width: 60px;
     height: 60px;
+  }
+
+  /* 極小螢幕下的表格最小寬度 */
+  .data-table {
+    min-width: 450px;
   }
 
   /* 選項按鈕群全寬 */
