@@ -8,10 +8,11 @@ pipeline {
                 echo '✅ 成功從 GitHub 抓下最新程式碼！'
             }
         }
-        stage('初體驗 (Hello World)') {
+        stage('動態漏洞過濾 (Dynamic Vuln Filter)') {
             steps {
-                echo '🚀 太神啦！這是我專屬的 DevSecOps 流水線！'
-                sh 'python3 --version'
+                echo '🔍 開始啟動核心引擎：比對靜態漏洞與動態軌跡...'
+                sh 'python3 prioritize_vuln.py'
+                echo '🎉 報告產出完成！'
             }
         }
     }
