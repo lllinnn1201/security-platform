@@ -11,7 +11,13 @@ pipeline {
             steps {
                 echo '🔨 正在編譯 C 語言測試程式...'
                 sh '''
-                echo "#include <stdio.h>\nint main() { printf(\\"Hello DevSecOps!\\\\n\\"); return 0; }" > target.c
+                cat << 'INNER_EOF' > target.c
+#include <stdio.h>
+int main() {
+    printf("Hello DevSecOps!\\n");
+    return 0;
+}
+INNER_EOF
                 gcc target.c -o target
                 '''
             }
