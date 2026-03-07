@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>掃描結果</title>
+</head>
+<body>
+  <main>
+    <h1>掃描結果</h1>
+
+  {% if error %}
+    <p role="alert" style="color:#b00020;">錯誤：{{ error }}</p>
+    <p><a href="/">回到首頁</a></p>
+  {% else %}
+
+    <h3>流程模式</h3>
+    <p>
+      Lock generation：
+      <b>{{ "開啟" if enable_lock else "關閉" }}</b>
+    </p>
+
+    {% if enable_lock %}
+      <p>
+        偵測到 / 產生的 lock files：
+        <b>{{ generated_locks | join(", ") if generated_locks else "無" }}</b>
+      </p>
+      <p style="color:#666; font-size: 0.95em;">
+        註：不同專案使用的套件管理工具不同，未必會產生同一種 lock file（例如 Poetry 專案才會有 poetry.lock）。
+      </p>
+    {% endif %}
+
+    <h3>統計摘要</h3>
+    <p><b>GRYPE matches</b> = {{ grype_matches }}</p>
+    <p><b>TRIVY vulns</b> = {{ trivy_vulns }}</p>
+    <p><b>OSV vulnerable packages</b> = {{ osv_packages if osv_packages is defined else 0 }}</p>
+    <p><b>OSV vulnerabilities</b> = {{ osv_vulns if osv_vulns is defined else 0 }}</p>
+    <p><b>OSV scan success</b> = {{ osv_success if osv_success is defined else False }}</p>
+    <p><b>OSV return code</b> = {{ osv_returncode if osv_returncode is defined else "N/A" }}</p>
+
+    {% if osv_stderr is defined and osv_stderr %}
+      <h3>OSV 執行訊息</h3>
+      <pre style="white-space: pre-wrap; background:#f5f5f5; padding:10px; border:1px solid #ccc;">{{ osv_stderr }}</pre>
+    {% endif %}
+
+    <h3>OSV-Scanner 詳細結果</h3>
+    {% if osv_summary is defined and osv_summary and osv_summary.packages %}
+      <ul>
+        {% for pkg in osv_summary.packages %}
+          <li>
+            <b>{{ pkg.name }}</b> {{ pkg.version }} ({{ pkg.ecosystem }})：
+            {{ pkg.vulnerability_count }} 個漏洞
+            <br>
+            IDs: {{ pkg.vulnerability_ids | join(", ") }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>未找到可供 OSV 掃描的依賴檔，或未偵測到漏洞。</p>
+    {% endif %}
+
+    <p>
+      <a href="/download?scan_id={{ scan_id }}">下載 reports.zip</a>
+    </p>
+
+    <h3>輸出檔案說明（reports.zip 內）</h3>
+    <ul>
+      <li><b>syft-sbom.json</b>：Syft 產生的 CycloneDX SBOM</li>
+      <li><b>trivy-sbom.json</b>：Trivy 產生的 CycloneDX SBOM</li>
+      <li><b>syft-vuln.json</b>：Grype 以 Syft SBOM 進行 SBOM-based 漏洞比對</li>
+      <li><b>trivy-vuln.json</b>：Trivy 以 filesystem-based 方式掃描漏洞</li>
+      <li><b>osv-vuln.json</b>：OSV-Scanner 針對 source / lockfile / requirements 的依賴漏洞報告</li>
+    </ul>
+
+    <p><a href="/">再掃一次</a></p>
+  {% endif %}
+  </main>
+</body>
+</html>
