@@ -1,18 +1,14 @@
 'use client'; // 客戶端元件（需要狀態管理）
 
 // ===== 程式碼上傳頁面 =====
-// 支援拖拉上傳與 Git Repo URL 輸入
+// 支援拖拉上傳與 Git Repo URL 輸入，掃描類型對齊 DevSecOps 工具分類
 
 import { useState } from 'react'; // React 狀態鉤子
 import {
-    FolderOpen,   // 檔案夾圖示
-    Link2,        // 連結圖示
-    Settings,     // 設定圖示
     FileCode,     // 程式碼檔圖示
     ArrowRight,   // 箭頭圖示
     UploadCloud,  // 上傳雲圖示
     X,            // 關閉圖示
-    ClipboardList, // 清單圖示
 } from 'lucide-react';
 
 // 程式碼上傳頁面元件
@@ -67,7 +63,7 @@ export default function UploadPage() {
             {/* 頁面標題 */}
             <div className="page-header">
                 <h2>程式碼上傳</h2>
-                <p>上傳程式碼或輸入 Git Repository URL 以觸發安全分析</p>
+                <p>上傳程式碼或輸入 Git Repository URL 以觸發 CI/CD 安全分析</p>
             </div>
 
             <div className="grid-2">
@@ -75,10 +71,7 @@ export default function UploadPage() {
                 <div>
                     {/* 拖拉上傳區 */}
                     <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
-                        <div className="section-title">
-                            <FolderOpen size={16} />
-                            檔案上傳
-                        </div>
+                        <div className="section-title">檔案上傳</div>
                         <div
                             className={`upload-zone ${isDragOver ? 'drag-over' : ''}`}
                             onDragOver={handleDragOver}
@@ -136,10 +129,7 @@ export default function UploadPage() {
 
                     {/* Git Repo URL 輸入 */}
                     <div className="glass-card">
-                        <div className="section-title">
-                            <Link2 size={16} />
-                            Git Repository
-                        </div>
+                        <div className="section-title">Git Repository</div>
                         <input
                             type="text"
                             className="input-field"
@@ -152,26 +142,23 @@ export default function UploadPage() {
                             color: 'var(--text-muted)',
                             marginTop: 'var(--spacing-sm)',
                         }}>
-                            輸入公開的 Git Repository URL，系統將自動 clone 並分析
+                            輸入公開的 Git Repository URL，系統將自動 clone 並觸發 Jenkins Pipeline
                         </p>
                     </div>
                 </div>
 
                 {/* 右側：分析設定 */}
                 <div>
-                    {/* 分析類型選擇 */}
+                    {/* 分析類型選擇（對齊 DevSecOps 工具分類） */}
                     <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
-                        <div className="section-title">
-                            <Settings size={16} />
-                            分析類型
-                        </div>
+                        <div className="section-title">分析類型</div>
                         <div className="option-group">
-                            {/* 四個分析選項 */}
+                            {/* 工具分類選項 */}
                             {[
-                                { key: 'all', label: '全部掃描', desc: 'SAST + SBOM + 漏洞' },
-                                { key: 'sast', label: 'SAST 靜態分析', desc: 'SonarQube 掃描' },
-                                { key: 'sbom', label: 'SBOM 產生', desc: 'Syft 依賴分析' },
-                                { key: 'vuln', label: '漏洞掃描', desc: 'Grype CVE 比對' },
+                                { key: 'all', label: '完整 Pipeline', desc: '6 個工具全部執行' },
+                                { key: 'static', label: '靜態分析', desc: 'SonarQube + OSV-Scanner' },
+                                { key: 'dynamic', label: '動態分析', desc: 'Strace + Valgrind' },
+                                { key: 'performance', label: '效能測試', desc: 'K6 + Lighthouse' },
                             ].map((option) => (
                                 <button
                                     key={option.key}
@@ -188,10 +175,7 @@ export default function UploadPage() {
 
                     {/* 分析摘要 */}
                     <div className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
-                        <div className="section-title">
-                            <ClipboardList size={16} />
-                            掃描摘要
-                        </div>
+                        <div className="section-title">掃描摘要</div>
                         <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
                             {/* 上傳來源 */}
                             <div style={{
@@ -214,7 +198,32 @@ export default function UploadPage() {
                             }}>
                                 <span>分析類型</span>
                                 <span style={{ color: 'var(--text-primary)' }}>
-                                    {scanTypes.includes('all') ? '完整掃描' : scanTypes.join(', ')}
+                                    {scanTypes.includes('all') ? '完整 Pipeline（6 工具）' : scanTypes.map((t) => {
+                                        // 對應中文名稱
+                                        const labels: Record<string, string> = { static: '靜態分析', dynamic: '動態分析', performance: '效能測試' };
+                                        return labels[t] || t;
+                                    }).join('、')}
+                                </span>
+                            </div>
+                            {/* 執行工具 */}
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                padding: '8px 0',
+                                borderBottom: '1px solid var(--border-default)',
+                            }}>
+                                <span>執行工具</span>
+                                <span style={{ color: 'var(--text-primary)', fontSize: '13px' }}>
+                                    {scanTypes.includes('all') ? 'SonarQube, OSV-Scanner, Strace, Valgrind, K6, Lighthouse' :
+                                        scanTypes.map((t) => {
+                                            // 各分類對應的工具
+                                            const toolMap: Record<string, string> = {
+                                                static: 'SonarQube, OSV-Scanner',
+                                                dynamic: 'Strace, Valgrind',
+                                                performance: 'K6, Lighthouse',
+                                            };
+                                            return toolMap[t] || '';
+                                        }).filter(Boolean).join(', ')}
                                 </span>
                             </div>
                             {/* 預估時間 */}
@@ -225,7 +234,7 @@ export default function UploadPage() {
                             }}>
                                 <span>預估時間</span>
                                 <span style={{ color: 'var(--text-primary)' }}>
-                                    {scanTypes.includes('all') ? '~5 分鐘' : '~2 分鐘'}
+                                    {scanTypes.includes('all') ? '~8 分鐘' : `~${scanTypes.length * 3} 分鐘`}
                                 </span>
                             </div>
                         </div>
@@ -234,7 +243,7 @@ export default function UploadPage() {
                     {/* 提交按鈕 */}
                     <button className="btn btn-primary" style={{ width: '100%', padding: '12px' }}>
                         <ArrowRight size={16} />
-                        開始分析
+                        觸發 Jenkins Pipeline
                     </button>
                 </div>
             </div>
