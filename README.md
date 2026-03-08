@@ -81,4 +81,4 @@ npm install
 npm run dev
 ```
 
-瀏覽器開啟 http://localhost:3000
+瀏覽器開啟 https://security-platform-azure.vercel.app
