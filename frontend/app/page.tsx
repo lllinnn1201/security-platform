@@ -1,26 +1,34 @@
 // ===== Dashboard 首頁 =====
-// 顯示總覽統計卡片、最近掃描紀錄、風險等級分佈
+// 顯示 6 個 DevSecOps 工具的即時狀態、最近掃描紀錄、風險等級分佈
 
 import {
-  dashboardStats,   // 統計卡片資料
+  toolStatusCards,  // 工具狀態卡片資料
   recentScans,      // 最近掃描紀錄
   riskDistribution, // 風險等級分佈
 } from '@/data/mockData';
 import {
-  ScanSearch,   // 掃描圖示
-  ShieldCheck,  // 漏洞圖示
-  Activity,     // 評分圖示
-  Package,      // SBOM 圖示
-  TrendingUp,   // 上升趨勢圖示
-  TrendingDown, // 下降趨勢圖示
+  CheckCircle2, // 通過圖示
+  XCircle,      // 失敗圖示
+  Loader2,      // 執行中圖示
+  Clock,        // 等待中圖示
 } from 'lucide-react';
 
-// 統計卡片圖示映射表
-const statIconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  scan: ScanSearch,
-  shield: ShieldCheck,
-  activity: Activity,
-  package: Package,
+
+
+// 狀態名稱對應 Lucide 圖示的映射表
+const statusIconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  'passed': CheckCircle2,
+  'failed': XCircle,
+  'running': Loader2,
+  'pending': Clock,
+};
+
+// 狀態名稱對應中文標籤
+const statusLabelMap: Record<string, string> = {
+  'passed': '通過',
+  'failed': '未通過',
+  'running': '執行中',
+  'pending': '等待中',
 };
 
 // Dashboard 頁面元件
@@ -29,8 +37,8 @@ export default function DashboardPage() {
   const total = riskDistribution.reduce((sum, item) => sum + item.count, 0);
   let accumulated = 0; // 累計角度百分比
   const gradientStops = riskDistribution.map((item) => {
-    const start = accumulated;              // 起始百分比
-    accumulated += (item.count / total) * 100; // 累加
+    const start = accumulated;                  // 起始百分比
+    accumulated += (item.count / total) * 100;  // 累加
     return `${item.color} ${start}% ${accumulated}%`; // 色段
   });
 
@@ -39,29 +47,36 @@ export default function DashboardPage() {
       {/* 頁面標題 */}
       <div className="page-header">
         <h2>儀表板總覽</h2>
-        <p>掌握源碼安全分析的即時狀態與趨勢</p>
+        <p>掌握所有 DevSecOps 工具的即時狀態與分析結果</p>
       </div>
 
-      {/* 統計卡片區 */}
-      <div className="stats-grid">
-        {dashboardStats.map((stat) => {
-          // 取得對應的 Lucide 圖示元件
-          const IconComponent = statIconMap[stat.icon];
+      {/* 6 個工具狀態卡片 */}
+      <div className="tools-grid">
+        {toolStatusCards.map((card) => {
+          // 取得對應的狀態圖示元件
+          const StatusIcon = statusIconMap[card.status];
           return (
-            <div key={stat.label} className="glass-card stat-card">
-              {/* 圖示 */}
-              <div className="stat-icon">
-                {IconComponent && <IconComponent size={22} />}
+            <div key={card.tool} className="glass-card tool-card">
+              {/* 卡片標頭：名稱 + 狀態 */}
+              <div className="tool-card-header">
+                {/* 左側：工具名稱 */}
+                <div className="tool-card-name">
+                  {card.tool}
+                </div>
+                {/* 右側：分類標籤 */}
+                <span className="tool-card-category">{card.category}</span>
               </div>
-              {/* 數值 */}
-              <div className="stat-value">{stat.value}</div>
-              {/* 標籤 */}
-              <div className="stat-label">{stat.label}</div>
-              {/* 趨勢 */}
-              <div className={`stat-trend ${stat.trendUp ? 'up' : 'down'}`}>
-                {/* 趨勢方向圖示 */}
-                {stat.trendUp ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                <span>{stat.trend} 較上月</span>
+              {/* 摘要文字 */}
+              <div className="tool-card-summary">{card.summary}</div>
+              {/* 底部：狀態 + 時間 */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                {/* 狀態標籤 */}
+                <span className={`tool-status ${card.status}`}>
+                  {StatusIcon && <StatusIcon size={12} />}
+                  {statusLabelMap[card.status]}
+                </span>
+                {/* 最後執行時間 */}
+                <span className="tool-card-time">{card.lastRun}</span>
               </div>
             </div>
           );

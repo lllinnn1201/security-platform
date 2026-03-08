@@ -1,5 +1,5 @@
 // ===== Pipeline 狀態頁面 =====
-// 顯示 Jenkins Job 列表、階段進度與品質閘門結果
+// 顯示 Jenkins CI/CD 完整 7 階段流水線、Quality Gate 條件
 
 import { pipelineJobs } from '@/data/mockData'; // 匯入 mock 資料
 import {
@@ -16,10 +16,10 @@ export default function PipelinePage() {
             {/* 頁面標題 */}
             <div className="page-header">
                 <h2>Pipeline 狀態</h2>
-                <p>監控 Jenkins CI/CD Pipeline 的即時執行狀態與歷史紀錄</p>
+                <p>監控 Jenkins CI/CD Pipeline 的即時執行狀態、完整工具階段與 Quality Gate</p>
             </div>
 
-            {/* 統計摘要（使用 CSS class 取代 inline grid） */}
+            {/* 統計摘要 */}
             <div className="stats-grid">
                 {/* 各狀態統計 */}
                 {[
@@ -29,7 +29,9 @@ export default function PipelinePage() {
                     { label: '執行中', value: pipelineJobs.filter((j) => j.status === 'running').length, color: 'var(--status-running)' },
                 ].map((stat) => (
                     <div key={stat.label} className="glass-card" style={{ textAlign: 'center' }}>
+                        {/* 數值 */}
                         <div style={{ fontSize: '26px', fontWeight: 700, color: stat.color }}>{stat.value}</div>
+                        {/* 標籤 */}
                         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{stat.label}</div>
                     </div>
                 ))}
@@ -38,7 +40,7 @@ export default function PipelinePage() {
             {/* Pipeline Job 列表 */}
             {pipelineJobs.map((job) => (
                 <div key={job.id} className="glass-card" style={{ marginBottom: 'var(--spacing-md)' }}>
-                    {/* Job 標頭（使用 CSS class 支援手機堆疊） */}
+                    {/* Job 標頭 */}
                     <div className="job-header">
                         {/* 左側：Job 資訊 */}
                         <div>
@@ -50,7 +52,7 @@ export default function PipelinePage() {
                                 {/* Job ID */}
                                 <span className="code-text">{job.id}</span>
                             </div>
-                            {/* 詳細資訊（使用 CSS class 支援換行） */}
+                            {/* 詳細資訊 */}
                             <div className="job-details">
                                 <span>{job.name}</span>
                                 <span>{job.triggeredBy}</span>
@@ -68,7 +70,7 @@ export default function PipelinePage() {
                         </div>
                     </div>
 
-                    {/* 階段進度 */}
+                    {/* 階段進度（7 個工具階段） */}
                     <div className="pipeline-stages">
                         {job.stages.map((stage, i) => (
                             <span key={stage.name} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--spacing-xs)' }}>
@@ -85,6 +87,31 @@ export default function PipelinePage() {
                             </span>
                         ))}
                     </div>
+
+                    {/* Quality Gate 條件（僅已完成的 Job 顯示） */}
+                    {job.gateConditions.length > 0 && (
+                        <div className="gate-conditions">
+                            {/* 遍歷每個 Quality Gate 條件 */}
+                            {job.gateConditions.map((condition) => (
+                                <div key={condition.rule} className={`gate-condition ${condition.passed ? 'passed' : 'failed'}`}>
+                                    {/* 左側：規則文字 */}
+                                    <span className="gate-condition-rule">
+                                        {/* 狀態圖示 */}
+                                        {condition.passed ? (
+                                            <CheckCircle2 size={14} style={{ color: 'var(--status-success)', verticalAlign: 'middle', marginRight: '6px' }} />
+                                        ) : (
+                                            <XCircle size={14} style={{ color: 'var(--status-failure)', verticalAlign: 'middle', marginRight: '6px' }} />
+                                        )}
+                                        {condition.rule}
+                                    </span>
+                                    {/* 右側：實際值 */}
+                                    <span className="gate-condition-value" style={{ color: condition.passed ? 'var(--status-success)' : 'var(--status-failure)' }}>
+                                        {condition.actual}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>

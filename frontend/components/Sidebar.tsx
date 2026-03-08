@@ -7,9 +7,9 @@ import { navItems } from '@/data/mockData';     // 導覽項目資料
 import {
     LayoutDashboard, // 儀表板圖示
     Upload,          // 上傳圖示
-    FileText,        // 報告圖示
-    GitBranch,       // Code Flow 圖示
-    List,            // SBOM 圖示
+    FileSearch,      // 靜態分析圖示（區別 SonarQube 的 ShieldCheck）
+    Cpu,             // 動態分析圖示（處理器 = 動態執行分析）
+    BarChart3,       // 效能檢測圖示（區別 Lighthouse 的 Gauge）
     PlayCircle,      // Pipeline 圖示
     Shield,          // Logo 圖示
 } from 'lucide-react';
@@ -18,9 +18,9 @@ import {
 const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
     'layout-dashboard': LayoutDashboard,
     'upload': Upload,
-    'file-text': FileText,
-    'git-branch': GitBranch,
-    'list': List,
+    'file-search': FileSearch,
+    'cpu': Cpu,
+    'bar-chart-3': BarChart3,
     'play-circle': PlayCircle,
 };
 
