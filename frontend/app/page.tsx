@@ -31,6 +31,24 @@ const statusLabelMap: Record<string, string> = {
   'pending': '等待中',
 };
 
+// 掃描狀態對應中文標籤
+const scanStatusLabelMap: Record<string, string> = {
+  'success': '成功',
+  'failure': '失敗',
+  'running': '執行中',
+  'pending': '等待中',
+  'cancelled': '已取消',
+};
+
+// 風險等級對應中文標籤
+const riskLabelMap: Record<string, string> = {
+  'critical': '嚴重',
+  'high': '高',
+  'medium': '中',
+  'low': '低',
+  'info': '資訊',
+};
+
 // Dashboard 頁面元件
 export default function DashboardPage() {
   // 計算環形圖所需的 conic-gradient 參數
@@ -111,11 +129,11 @@ export default function DashboardPage() {
                     </td>
                     {/* 狀態指示燈 */}
                     <td>
-                      <span className={`status-dot ${scan.status}`}>{scan.status}</span>
+                      <span className={`status-dot ${scan.status}`}>{scanStatusLabelMap[scan.status] || scan.status}</span>
                     </td>
                     {/* 風險等級標籤 */}
                     <td>
-                      <span className={`risk-badge ${scan.riskLevel}`}>{scan.riskLevel}</span>
+                      <span className={`risk-badge ${scan.riskLevel}`}>{riskLabelMap[scan.riskLevel] || scan.riskLevel}</span>
                     </td>
                     {/* 漏洞數量 */}
                     <td>{scan.vulnerabilities}</td>
@@ -148,7 +166,7 @@ export default function DashboardPage() {
                   {/* 色塊 */}
                   <span className="pie-legend-color" style={{ background: item.color }} />
                   {/* 等級 + 數量 */}
-                  <span>{item.level.toUpperCase()}: {item.count}</span>
+                  <span>{riskLabelMap[item.level] || item.level}: {item.count}</span>
                 </div>
               ))}
             </div>

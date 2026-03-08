@@ -1,4 +1,4 @@
-// ===== SecureFlow DevSecOps 平台 — Mock 資料 =====
+// ===== Security Platform DevSecOps 平台 — Mock 資料 =====
 // 集中管理所有頁面的展示用假資料，結構對齊未來 API 格式
 // 工具整合：SonarQube / OSV-Scanner / Strace / Valgrind / K6 / Lighthouse
 
@@ -26,7 +26,7 @@ export const toolStatusCards: ToolStatusCard[] = [
     { tool: 'Strace', category: '動態分析', status: 'passed', summary: '追蹤 1,284 個系統呼叫', lastRun: '2026-02-15 21:32' },
     { tool: 'Valgrind', category: '動態分析', status: 'passed', summary: '未偵測到記憶體洩漏', lastRun: '2026-02-15 21:33' },
     { tool: 'K6', category: '效能檢測', status: 'passed', summary: 'P95 回應 < 200ms', lastRun: '2026-02-15 21:34' },
-    { tool: 'Lighthouse', category: '效能檢測', status: 'failed', summary: 'Performance 分數 58/100', lastRun: '2026-02-15 21:35' },
+    { tool: 'Lighthouse', category: '效能檢測', status: 'failed', summary: '效能分數 58/100', lastRun: '2026-02-15 21:35' },
 ];
 
 // ---------- 最近掃描紀錄 ----------
@@ -193,12 +193,12 @@ export interface ValgrindError {
 
 // Valgrind 記憶體分析 mock
 export const valgrindErrors: ValgrindError[] = [
-    { id: 'VG-001', type: 'Definitely Lost', severity: 'critical', bytes: 1024, location: 'allocateBuffer()', file: 'src/utils/buffer.c', line: 42, stackTrace: 'main → processRequest → allocateBuffer' },
-    { id: 'VG-002', type: 'Invalid Read', severity: 'high', bytes: 4, location: 'parseHeader()', file: 'src/parser/http.c', line: 78, stackTrace: 'main → handleConnection → parseHeader' },
-    { id: 'VG-003', type: 'Use After Free', severity: 'critical', bytes: 8, location: 'freeSession()', file: 'src/session/manager.c', line: 156, stackTrace: 'main → cleanupSessions → freeSession' },
-    { id: 'VG-004', type: 'Possibly Lost', severity: 'medium', bytes: 256, location: 'createWorkerThread()', file: 'src/thread/pool.c', line: 34, stackTrace: 'main → initThreadPool → createWorkerThread' },
-    { id: 'VG-005', type: 'Uninitialized Value', severity: 'medium', bytes: 0, location: 'computeChecksum()', file: 'src/crypto/hash.c', line: 91, stackTrace: 'main → verifyPayload → computeChecksum' },
-    { id: 'VG-006', type: 'Still Reachable', severity: 'low', bytes: 512, location: 'initLogger()', file: 'src/utils/logger.c', line: 12, stackTrace: 'main → initLogger' },
+    { id: 'VG-001', type: '確定遺失', severity: 'critical', bytes: 1024, location: 'allocateBuffer()', file: 'src/utils/buffer.c', line: 42, stackTrace: 'main → processRequest → allocateBuffer' },
+    { id: 'VG-002', type: '無效讀取', severity: 'high', bytes: 4, location: 'parseHeader()', file: 'src/parser/http.c', line: 78, stackTrace: 'main → handleConnection → parseHeader' },
+    { id: 'VG-003', type: '釋放後使用', severity: 'critical', bytes: 8, location: 'freeSession()', file: 'src/session/manager.c', line: 156, stackTrace: 'main → cleanupSessions → freeSession' },
+    { id: 'VG-004', type: '可能遺失', severity: 'medium', bytes: 256, location: 'createWorkerThread()', file: 'src/thread/pool.c', line: 34, stackTrace: 'main → initThreadPool → createWorkerThread' },
+    { id: 'VG-005', type: '未初始化值', severity: 'medium', bytes: 0, location: 'computeChecksum()', file: 'src/crypto/hash.c', line: 91, stackTrace: 'main → verifyPayload → computeChecksum' },
+    { id: 'VG-006', type: '仍可存取', severity: 'low', bytes: 512, location: 'initLogger()', file: 'src/utils/logger.c', line: 12, stackTrace: 'main → initLogger' },
 ];
 
 // Valgrind 統計摘要
@@ -273,9 +273,9 @@ export interface LighthouseScore {
 
 // Lighthouse 4 大分數 mock
 export const lighthouseScores: LighthouseScore[] = [
-    { category: 'Performance', score: 58, color: '#ea580c' },
-    { category: 'Accessibility', score: 91, color: '#16a34a' },
-    { category: 'Best Practices', score: 83, color: '#ca8a04' },
+    { category: '效能', score: 58, color: '#ea580c' },
+    { category: '無障礙', score: 91, color: '#16a34a' },
+    { category: '最佳實踐', score: 83, color: '#ca8a04' },
     { category: 'SEO', score: 95, color: '#16a34a' },
 ];
 
@@ -291,12 +291,12 @@ export interface LighthouseAudit {
 
 // Lighthouse 建議 mock
 export const lighthouseAudits: LighthouseAudit[] = [
-    { id: 'LH-001', title: 'Reduce unused JavaScript', category: 'Performance', impact: 'high', description: '移除未使用的 JavaScript 以減少網路傳輸', savings: '節省 1.2s' },
-    { id: 'LH-002', title: 'Serve images in next-gen formats', category: 'Performance', impact: 'high', description: '使用 WebP / AVIF 格式取代 PNG/JPEG', savings: '節省 850ms' },
-    { id: 'LH-003', title: 'Eliminate render-blocking resources', category: 'Performance', impact: 'medium', description: '延遲載入非關鍵 CSS/JS 資源', savings: '節省 620ms' },
-    { id: 'LH-004', title: 'Image elements have [alt] attributes', category: 'Accessibility', impact: 'medium', description: '3 個 img 元素缺少 alt 屬性', savings: '—' },
-    { id: 'LH-005', title: 'Document has a meta description', category: 'SEO', impact: 'low', description: '頁面已有 meta description', savings: '—' },
-    { id: 'LH-006', title: 'Properly size images', category: 'Performance', impact: 'medium', description: '圖片尺寸應與顯示大小相符', savings: '節省 340ms' },
+    { id: 'LH-001', title: '移除未使用的 JavaScript', category: '效能', impact: 'high', description: '移除未使用的 JavaScript 以減少網路傳輸', savings: '節省 1.2s' },
+    { id: 'LH-002', title: '使用新一代圖片格式', category: '效能', impact: 'high', description: '使用 WebP / AVIF 格式取代 PNG/JPEG', savings: '節省 850ms' },
+    { id: 'LH-003', title: '消除阻擋渲染的資源', category: '效能', impact: 'medium', description: '延遲載入非關鍵 CSS/JS 資源', savings: '節省 620ms' },
+    { id: 'LH-004', title: '圖片元素缺少 alt 屬性', category: '無障礙', impact: 'medium', description: '3 個 img 元素缺少 alt 屬性', savings: '—' },
+    { id: 'LH-005', title: '文件具備 meta 描述', category: 'SEO', impact: 'low', description: '頁面已有 meta description', savings: '—' },
+    { id: 'LH-006', title: '正確設定圖片尺寸', category: '效能', impact: 'medium', description: '圖片尺寸應與顯示大小相符', savings: '節省 340ms' },
 ];
 
 // ---------- Pipeline 資料（整合全部工具階段） ----------
@@ -340,9 +340,9 @@ export const pipelineJobs: PipelineJob[] = [
         date: '2026-02-15 21:30',
         qualityGate: 'passed',
         gateConditions: [
-            { rule: 'Critical 漏洞數 = 0', actual: '0', threshold: '0', passed: true },
-            { rule: 'High 漏洞數 ≤ 3', actual: '2', threshold: '3', passed: true },
-            { rule: 'Lighthouse Performance ≥ 60', actual: '72', threshold: '60', passed: true },
+            { rule: '嚴重漏洞數 = 0', actual: '0', threshold: '0', passed: true },
+            { rule: '高風險漏洞數 ≤ 3', actual: '2', threshold: '3', passed: true },
+            { rule: 'Lighthouse 效能分數 ≥ 60', actual: '72', threshold: '60', passed: true },
             { rule: '記憶體洩漏 = 0', actual: '0', threshold: '0', passed: true },
             { rule: 'K6 錯誤率 < 1%', actual: '0.12%', threshold: '1%', passed: true },
         ],
@@ -366,9 +366,9 @@ export const pipelineJobs: PipelineJob[] = [
         date: '2026-02-15 20:15',
         qualityGate: 'failed',
         gateConditions: [
-            { rule: 'Critical 漏洞數 = 0', actual: '3', threshold: '0', passed: false },
-            { rule: 'High 漏洞數 ≤ 3', actual: '5', threshold: '3', passed: false },
-            { rule: 'Lighthouse Performance ≥ 60', actual: '58', threshold: '60', passed: false },
+            { rule: '嚴重漏洞數 = 0', actual: '3', threshold: '0', passed: false },
+            { rule: '高風險漏洞數 ≤ 3', actual: '5', threshold: '3', passed: false },
+            { rule: 'Lighthouse 效能分數 ≥ 60', actual: '58', threshold: '60', passed: false },
             { rule: '記憶體洩漏 = 0', actual: '2', threshold: '0', passed: false },
             { rule: 'K6 錯誤率 < 1%', actual: '0.5%', threshold: '1%', passed: true },
         ],
@@ -392,9 +392,9 @@ export const pipelineJobs: PipelineJob[] = [
         date: '2026-02-15 19:42',
         qualityGate: 'passed',
         gateConditions: [
-            { rule: 'Critical 漏洞數 = 0', actual: '0', threshold: '0', passed: true },
-            { rule: 'High 漏洞數 ≤ 3', actual: '1', threshold: '3', passed: true },
-            { rule: 'Lighthouse Performance ≥ 60', actual: '85', threshold: '60', passed: true },
+            { rule: '嚴重漏洞數 = 0', actual: '0', threshold: '0', passed: true },
+            { rule: '高風險漏洞數 ≤ 3', actual: '1', threshold: '3', passed: true },
+            { rule: 'Lighthouse 效能分數 ≥ 60', actual: '85', threshold: '60', passed: true },
             { rule: '記憶體洩漏 = 0', actual: '0', threshold: '0', passed: true },
             { rule: 'K6 錯誤率 < 1%', actual: '0.05%', threshold: '1%', passed: true },
         ],

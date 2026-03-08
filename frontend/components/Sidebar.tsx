@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     {/* 盾牌圖示 */}
                     <Shield size={18} />
                 </div>
-                <h1>SecureFlow</h1>
+                <h1>Security Platform</h1>
             </div>
 
             {/* 導覽選單 */}

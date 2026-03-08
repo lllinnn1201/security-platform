@@ -12,6 +12,20 @@ import {
     lighthouseAudits,  // Lighthouse 建議清單
 } from '@/data/mockData';
 
+// K6 端點狀態對應中文標籤
+const statusLabelMap: Record<string, string> = {
+    'good': '良好',
+    'warning': '警告',
+    'bad': '不佳',
+};
+
+// 影響程度對應中文標籤
+const impactLabelMap: Record<string, string> = {
+    'high': '高',
+    'medium': '中',
+    'low': '低',
+};
+
 // 效能檢測頁面元件
 export default function PerformancePage() {
     // 目前啟用的 tab（k6 或 lighthouse）
@@ -109,7 +123,7 @@ export default function PerformancePage() {
                                             {/* 錯誤率 */}
                                             <td style={{ color: ep.errorRate !== '0%' ? 'var(--risk-medium)' : 'var(--status-success)' }}>{ep.errorRate}</td>
                                             {/* 狀態標籤 */}
-                                            <td><span className={`tool-status ${ep.status === 'good' ? 'passed' : ep.status === 'warning' ? 'running' : 'failed'}`}>{ep.status}</span></td>
+                                            <td><span className={`tool-status ${ep.status === 'good' ? 'passed' : ep.status === 'warning' ? 'running' : 'failed'}`}>{statusLabelMap[ep.status] || ep.status}</span></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -182,7 +196,7 @@ export default function PerformancePage() {
                                                 </span>
                                             </td>
                                             {/* 影響等級 */}
-                                            <td><span className={`impact-badge ${audit.impact}`}>{audit.impact}</span></td>
+                                            <td><span className={`impact-badge ${audit.impact}`}>{impactLabelMap[audit.impact] || audit.impact}</span></td>
                                             {/* 說明 */}
                                             <td style={{ fontSize: '13px', color: 'var(--text-secondary)', maxWidth: '300px' }}>{audit.description}</td>
                                             {/* 預估效益 */}

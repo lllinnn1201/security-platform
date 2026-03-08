@@ -395,10 +395,10 @@ a:hover {
 
 /* 頂部列標題 */
 .topbar-title {
-  font-size: 16px;
-  /* 字級 */
-  font-weight: 600;
-  /* 半粗 */
+  font-size: 22px;
+  /* 字級（與頁面主標題統一） */
+  font-weight: 700;
+  /* 粗體（與頁面主標題統一） */
   color: var(--text-primary);
 }
 

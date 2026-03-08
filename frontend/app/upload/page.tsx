@@ -129,7 +129,7 @@ export default function UploadPage() {
 
                     {/* Git Repo URL 輸入 */}
                     <div className="glass-card">
-                        <div className="section-title">Git Repository</div>
+                        <div className="section-title">Git 儲存庫</div>
                         <input
                             type="text"
                             className="input-field"

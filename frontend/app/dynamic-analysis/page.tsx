@@ -12,6 +12,23 @@ import {
     valgrindSummary,  // Valgrind 統計摘要
 } from '@/data/mockData';
 
+// 系統呼叫分類對應中文標籤
+const categoryLabelMap: Record<string, string> = {
+    'file': '檔案',
+    'network': '網路',
+    'process': '程序',
+    'memory': '記憶體',
+};
+
+// 風險等級對應中文標籤
+const riskLabelMap: Record<string, string> = {
+    'critical': '嚴重',
+    'high': '高',
+    'medium': '中',
+    'low': '低',
+    'info': '資訊',
+};
+
 // 動態分析頁面元件
 export default function DynamicAnalysisPage() {
     // 目前啟用的 tab（strace 或 valgrind）
@@ -102,7 +119,7 @@ export default function DynamicAnalysisPage() {
                                             {/* 執行時間 */}
                                             <td style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{record.duration}</td>
                                             {/* 分類標籤 */}
-                                            <td><span className={`category-badge ${record.category}`}>{record.category}</span></td>
+                                            <td><span className={`category-badge ${record.category}`}>{categoryLabelMap[record.category] || record.category}</span></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -120,8 +137,8 @@ export default function DynamicAnalysisPage() {
                         {/* 各記憶體分析統計卡片 */}
                         {[
                             { label: '總錯誤數', value: valgrindSummary.totalErrors.toString(), color: 'var(--risk-critical)' },
-                            { label: 'Definitely Lost', value: `${valgrindSummary.definitelyLost.toLocaleString()} bytes`, color: 'var(--risk-high)' },
-                            { label: 'Possibly Lost', value: `${valgrindSummary.possiblyLost.toLocaleString()} bytes`, color: 'var(--risk-medium)' },
+                            { label: '確定遺失', value: `${valgrindSummary.definitelyLost.toLocaleString()} bytes`, color: 'var(--risk-high)' },
+                            { label: '可能遺失', value: `${valgrindSummary.possiblyLost.toLocaleString()} bytes`, color: 'var(--risk-medium)' },
                             { label: '分配 / 釋放', value: `${valgrindSummary.allocations} / ${valgrindSummary.frees}`, color: 'var(--accent-primary)' },
                         ].map((stat) => (
                             <div key={stat.label} className="glass-card" style={{ textAlign: 'center' }}>
@@ -159,7 +176,7 @@ export default function DynamicAnalysisPage() {
                                             {/* 錯誤類型 */}
                                             <td style={{ fontWeight: 600 }}>{error.type}</td>
                                             {/* 嚴重程度標籤 */}
-                                            <td><span className={`risk-badge ${error.severity}`}>{error.severity}</span></td>
+                                            <td><span className={`risk-badge ${error.severity}`}>{riskLabelMap[error.severity] || error.severity}</span></td>
                                             {/* 影響位元組數 */}
                                             <td><span className="code-text">{error.bytes > 0 ? `${error.bytes} bytes` : '—'}</span></td>
                                             {/* 函式位置 */}

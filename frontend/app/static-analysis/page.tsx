@@ -13,6 +13,15 @@ import {
     sbomPackages,    // OSV-Scanner SBOM 套件
 } from '@/data/mockData';
 
+// 風險等級對應中文標籤
+const riskLabelMap: Record<string, string> = {
+    'critical': '嚴重',
+    'high': '高',
+    'medium': '中',
+    'low': '低',
+    'info': '資訊',
+};
+
 // 靜態分析頁面元件
 export default function StaticAnalysisPage() {
     // 目前啟用的 tab（sonarqube 或 osv-scanner）
@@ -64,11 +73,11 @@ export default function StaticAnalysisPage() {
                     <div className="stats-grid-5">
                         {/* 各風險等級統計卡片 */}
                         {[
-                            { label: 'Critical', count: vulnerabilities.filter((v) => v.severity === 'critical').length, cls: 'critical' },
-                            { label: 'High', count: vulnerabilities.filter((v) => v.severity === 'high').length, cls: 'high' },
-                            { label: 'Medium', count: vulnerabilities.filter((v) => v.severity === 'medium').length, cls: 'medium' },
-                            { label: 'Low', count: vulnerabilities.filter((v) => v.severity === 'low').length, cls: 'low' },
-                            { label: 'Code Smells', count: codeSmells.length, cls: 'info' },
+                            { label: '嚴重', count: vulnerabilities.filter((v) => v.severity === 'critical').length, cls: 'critical' },
+                            { label: '高', count: vulnerabilities.filter((v) => v.severity === 'high').length, cls: 'high' },
+                            { label: '中', count: vulnerabilities.filter((v) => v.severity === 'medium').length, cls: 'medium' },
+                            { label: '低', count: vulnerabilities.filter((v) => v.severity === 'low').length, cls: 'low' },
+                            { label: 'Code Smell', count: codeSmells.length, cls: 'info' },
                         ].map((item) => (
                             <div key={item.label} className="glass-card" style={{ textAlign: 'center' }}>
                                 {/* 數量 */}
@@ -111,7 +120,7 @@ export default function StaticAnalysisPage() {
                                             {/* 漏洞名稱 */}
                                             <td style={{ fontWeight: 600 }}>{vuln.title}</td>
                                             {/* 嚴重程度標籤 */}
-                                            <td><span className={`risk-badge ${vuln.severity}`}>{vuln.severity}</span></td>
+                                            <td><span className={`risk-badge ${vuln.severity}`}>{riskLabelMap[vuln.severity] || vuln.severity}</span></td>
                                             {/* 檔案 + 行號 */}
                                             <td><span className="code-text">{vuln.file}:{vuln.line}</span></td>
                                             {/* CWE 編號 */}
@@ -265,7 +274,7 @@ export default function StaticAnalysisPage() {
                                                 </span>
                                             </td>
                                             {/* 風險等級標籤 */}
-                                            <td><span className={`risk-badge ${pkg.riskLevel}`}>{pkg.riskLevel}</span></td>
+                                            <td><span className={`risk-badge ${pkg.riskLevel}`}>{riskLabelMap[pkg.riskLevel] || pkg.riskLevel}</span></td>
                                             {/* CVE 編號 */}
                                             <td>
                                                 {pkg.cve ? (

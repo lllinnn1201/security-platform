@@ -9,6 +9,15 @@ import {
     ChevronRight,  // 箭頭圖示
 } from 'lucide-react';
 
+// Pipeline 狀態對應中文標籤
+const statusLabelMap: Record<string, string> = {
+    'success': '成功',
+    'failure': '失敗',
+    'running': '執行中',
+    'pending': '等待中',
+    'cancelled': '已取消',
+};
+
 // Pipeline 狀態頁面元件
 export default function PipelinePage() {
     return (
@@ -46,7 +55,7 @@ export default function PipelinePage() {
                         <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-xs)', flexWrap: 'wrap' }}>
                                 {/* 狀態指示燈 */}
-                                <span className={`status-dot ${job.status}`}>{job.status}</span>
+                                <span className={`status-dot ${job.status}`}>{statusLabelMap[job.status] || job.status}</span>
                                 {/* Job 名稱 */}
                                 <span style={{ fontWeight: 700, fontSize: '15px' }}>{job.project}</span>
                                 {/* Job ID */}
