@@ -23,7 +23,7 @@ pipeline {
                 sh 'syft dir:. -o json > grype_result_temp.json'
             }
         }
-        stage('漏洞掃描 (Grype)') {
+        stage('靜態漏洞掃描 (Grype)') {
             steps {
                 echo '🚨 正在比對漏洞庫...'
                 sh 'grype sbom:grype_result_temp.json -o json > grype_result.json'
@@ -43,8 +43,27 @@ pipeline {
                 echo '🧠 啟動核心過濾引擎...'
                 sh '''
                 . venv/bin/activate
-                python3 prioritize_vuln.py || true
+                python3 prioritize_vuln.py
                 '''
+            }
+        }
+        stage('靜態開源漏洞掃描 (OSV-Scanner)') {
+            steps {
+                echo '🛡️ 啟動 Google OSV-Scanner...'
+                sh 'osv-scanner -r . --format json > osv_report.json || true'
+            }
+        }
+        stage('網站壓力與效能測試 (K6 & Lighthouse)') {
+            steps {
+                echo '🔥 啟動 K6 與 Lighthouse 測試...'
+                sh 'k6 run scripts/run_k6.bat || true'
+                sh 'lighthouse http://localhost:8000 --chrome-flags="--headless" --output html --output-path ./lighthouse-report.html || true'
+            }
+        }
+        stage('資安品質門檻 (Quality Gate)') {
+            steps {
+                echo '🛑 正在檢查是否有高風險的 Reachable 漏洞...'
+                sh 'python3 check_gate.py || true'
             }
         }
     }
