@@ -1,0 +1,102 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  已啟動 : 2026年3月8日 下午 05:00:04
+    來源 : c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\
+  目的地 : c:\Users\nancy\OneDrive\Desktop\專題\專題\vit_pytorch\
+
+    檔案 : *.*
+	    
+    選項 : *.* /S /E /DCOPY:DA /COPY:DAT /Z /NP /MT:8 /R:3 /W:5 
+
+-------------------------------------------------------------------------------
+
+	  *其他檔案   		   23531	c:\Users\nancy\OneDrive\Desktop\專題\專題\vit_pytorch\vaat.py
+	    較新      		    4909	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\accept_video_wrapper.py
+	    較新      		   10095	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\ats_vit.py
+	    較新      		    5671	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\cait.py
+	    較新      		   12139	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\cct.py
+	    較新      		   12590	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\cct_3d.py
+	    較新      		    8347	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\crossformer.py
+	    較新      		    9072	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\cross_vit.py
+	    較新      		    5935	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\cvt.py
+	    較新      		    4282	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\deepvit.py
+	    較新      		    9662	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\dino.py
+	    較新      		    4561	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\distill.py
+	    較新      		    1813	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\efficient.py
+	    較新      		   12657	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\es_vit.py
+	    較新      		    2478	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\extractor.py
+	    較新      		    5999	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\jumbo_vit.py
+	    較新      		    7308	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\learnable_memory_vit.py
+	    較新      		    6474	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\levit.py
+	    較新      		    4883	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\local_vit.py
+	    較新      		    8537	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\look_vit.py
+	    較新      		    4094	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\mae.py
+	    較新      		    8315	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\max_vit.py
+	    較新      		    9892	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\max_vit_with_registers.py
+	    較新      		    7675	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\mobile_vit.py
+	    較新      		    6160	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\mp3.py
+	    較新      		    5895	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\mpp.py
+	    較新      		   12590	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\na_vit.py
+	    較新      		    9936	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\na_vit_nested_tensor.py
+	    較新      		   11035	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\na_vit_nested_tensor_3d.py
+	    較新      		    5837	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\nest.py
+	    較新      		    6993	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\normalized_vit.py
+	    較新      		    4526	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\parallel_vit.py
+	    較新      		    5666	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\pit.py
+	    較新      		    1772	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\recorder.py
+	    較新      		    9515	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\regionvit.py
+	    較新      		    7731	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\rvt.py
+	    較新      		    9585	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\scalable_vit.py
+	    較新      		    8857	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\sep_vit.py
+	    較新      		    2709	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simmim.py
+	    較新      		    5691	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_flash_attn_vit.py
+	    較新      		    5563	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_flash_attn_vit_3d.py
+	    較新      		    5126	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_uvit.py
+	    較新      		    3834	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit.py
+	    較新      		    3696	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_1d.py
+	    較新      		    4344	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_3d.py
+	    較新      		    5256	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_fft.py
+	    較新      		    7177	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_hyper_connections.py
+	    較新      		    4652	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_patch_dropout.py
+	    較新      		    4548	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_qk_norm.py
+	    較新      		    4219	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_register_tokens.py
+	    較新      		    4748	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\simple_vit_with_value_residual.py
+	    較新      		    2888	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\t2t.py
+	    較新      		    7966	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\twins_svt.py
+	    較新      		   15254	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vat.py
+	    較新      		    4115	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit.py
+	    較新      		    3880	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_1d.py
+	    較新      		    4351	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_3d.py
+	    較新      		    4829	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_for_small_dataset.py
+	    較新      		    5895	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_nd.py
+	    較新      		   10081	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_nd_rotary.py
+	    較新      		    7258	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_with_decorr.py
+	    較新      		    4786	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_with_patch_dropout.py
+	    較新      		    4810	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vit_with_patch_merger.py
+	    較新      		    7599	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\vivit.py
+	    較新      		    8539	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\xcit.py
+	  *其他檔案   		    8467	c:\Users\nancy\OneDrive\Desktop\專題\專題\vit_pytorch\__pycache__\vit.cpython-314.pyc
+	  *其他檔案   		     391	c:\Users\nancy\OneDrive\Desktop\專題\專題\vit_pytorch\__pycache__\__init__.cpython-314.pyc
+	    較新      		     144	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__init__.py
+	    較舊      		   15349	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__pycache__\dino.cpython-312.pyc
+	    較舊      		    4584	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__pycache__\mae.cpython-312.pyc
+	    較舊      		    7844	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__pycache__\simple_vit.cpython-312.pyc
+	    較新      		    8043	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__pycache__\vit.cpython-312.pyc
+	    較新      		     393	c:\Users\nancy\OneDrive\Desktop\專題\vit-pytorch-main\vit-pytorch-main\vit_pytorch\__pycache__\__init__.cpython-312.pyc
+
+-------------------------------------------------------------------------------
+
+                  總計       已複製        略過        不符        失敗        額外
+      目錄 :         2         2         2         0         0         0
+      檔案 :        70        70         0         0         0         3
+     位元組 :   452.7 k   452.7 k         0         0         0    31.6 k
+      時間 :   0:00:00   0:00:00                       0:00:00   0:00:00
+
+
+      速度 :           11,888,641 位元組/秒。
+      速度 :              680.273 MB/分。
+   已結束 : 2026年3月8日 下午 05:00:04
+

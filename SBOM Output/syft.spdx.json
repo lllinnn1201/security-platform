@@ -1,0 +1,362 @@
+{
+ "spdxVersion": "SPDX-2.3",
+ "dataLicense": "CC0-1.0",
+ "SPDXID": "SPDXRef-DOCUMENT",
+ "name": "C:\\Users\\USER\\Desktop\\vit-pytorch-main",
+ "documentNamespace": "https://anchore.com/syft/dir/C-%5CUsers%5CUSER%5CDesktop%5Cvit-pytorch-main-6ce30977-eadf-4c61-81f8-f007f27725ec",
+ "creationInfo": {
+  "licenseListVersion": "3.27",
+  "creators": [
+   "Organization: Anchore, Inc",
+   "Tool: syft-1.36.0"
+  ],
+  "created": "2025-11-15T13:43:58Z"
+ },
+ "packages": [
+  {
+   "name": "actions/checkout",
+   "SPDXID": "SPDXRef-Package-github-action-actions-checkout-11baa6d69bb30bd8",
+   "versionInfo": "v4",
+   "supplier": "Organization: GitHub",
+   "originator": "Organization: GitHub",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "sourceInfo": "acquired package info from GitHub Actions workflow file or composite action file: \\vit-pytorch-main\\.github\\workflows\\python-publish.yml",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "externalRefs": [
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/checkout:actions\\/checkout:v4:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:github/actions/checkout@v4"
+    }
+   ]
+  },
+  {
+   "name": "actions/checkout",
+   "SPDXID": "SPDXRef-Package-github-action-actions-checkout-89dfa3ddf8e9a269",
+   "versionInfo": "v4",
+   "supplier": "Organization: GitHub",
+   "originator": "Organization: GitHub",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "sourceInfo": "acquired package info from GitHub Actions workflow file or composite action file: \\vit-pytorch-main\\.github\\workflows\\python-test.yml",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "externalRefs": [
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/checkout:actions\\/checkout:v4:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:github/actions/checkout@v4"
+    }
+   ]
+  },
+  {
+   "name": "actions/setup-python",
+   "SPDXID": "SPDXRef-Package-github-action-actions-setup-python-48f977588ae0da09",
+   "versionInfo": "v5",
+   "supplier": "Organization: GitHub",
+   "originator": "Organization: GitHub",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "sourceInfo": "acquired package info from GitHub Actions workflow file or composite action file: \\vit-pytorch-main\\.github\\workflows\\python-publish.yml",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "externalRefs": [
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup-python:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup-python:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup_python:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup_python:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:github/actions/setup-python@v5"
+    }
+   ]
+  },
+  {
+   "name": "actions/setup-python",
+   "SPDXID": "SPDXRef-Package-github-action-actions-setup-python-affd8f98d65ce18b",
+   "versionInfo": "v5",
+   "supplier": "Organization: GitHub",
+   "originator": "Organization: GitHub",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "sourceInfo": "acquired package info from GitHub Actions workflow file or composite action file: \\vit-pytorch-main\\.github\\workflows\\python-test.yml",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "externalRefs": [
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup-python:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup-python:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup_python:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup_python:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup:actions\\/setup-python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:actions\\/setup:actions\\/setup_python:v5:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:github/actions/setup-python@v5"
+    }
+   ]
+  },
+  {
+   "name": "pypa/gh-action-pypi-publish",
+   "SPDXID": "SPDXRef-Package-github-action-pypa-gh-action-pypi-publish-21ca1084aaddf198",
+   "versionInfo": "27b31702a0e7fc50959f5ad993c78deac1bdfc29",
+   "supplier": "Organization: pypa",
+   "originator": "Organization: pypa",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "sourceInfo": "acquired package info from GitHub Actions workflow file or composite action file: \\vit-pytorch-main\\.github\\workflows\\python-publish.yml",
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "externalRefs": [
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action-pypi-publish:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action-pypi-publish:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action_pypi_publish:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action_pypi_publish:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action-pypi:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action-pypi:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action_pypi:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action_pypi:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh-action:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh_action:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh:pypa\\/gh-action-pypi-publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "SECURITY",
+     "referenceType": "cpe23Type",
+     "referenceLocator": "cpe:2.3:a:pypa\\/gh:pypa\\/gh_action_pypi_publish:27b31702a0e7fc50959f5ad993c78deac1bdfc29:*:*:*:*:*:*:*"
+    },
+    {
+     "referenceCategory": "PACKAGE-MANAGER",
+     "referenceType": "purl",
+     "referenceLocator": "pkg:github/pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29"
+    }
+   ]
+  },
+  {
+   "name": "C:\\Users\\USER\\Desktop\\vit-pytorch-main",
+   "SPDXID": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "supplier": "NOASSERTION",
+   "downloadLocation": "NOASSERTION",
+   "filesAnalyzed": false,
+   "licenseConcluded": "NOASSERTION",
+   "licenseDeclared": "NOASSERTION",
+   "copyrightText": "NOASSERTION",
+   "primaryPackagePurpose": "FILE"
+  }
+ ],
+ "files": [
+  {
+   "fileName": "\\vit-pytorch-main\\.github\\workflows\\python-publish.yml",
+   "SPDXID": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-publish.yml-048374256c5e2892",
+   "checksums": [
+    {
+     "algorithm": "SHA1",
+     "checksumValue": "0000000000000000000000000000000000000000"
+    }
+   ],
+   "licenseConcluded": "NOASSERTION",
+   "licenseInfoInFiles": [
+    "NOASSERTION"
+   ],
+   "copyrightText": "NOASSERTION"
+  },
+  {
+   "fileName": "\\vit-pytorch-main\\.github\\workflows\\python-test.yml",
+   "SPDXID": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-test.yml-4508200d8c2e15c8",
+   "checksums": [
+    {
+     "algorithm": "SHA1",
+     "checksumValue": "0000000000000000000000000000000000000000"
+    }
+   ],
+   "licenseConcluded": "NOASSERTION",
+   "licenseInfoInFiles": [
+    "NOASSERTION"
+   ],
+   "copyrightText": "NOASSERTION"
+  }
+ ],
+ "relationships": [
+  {
+   "spdxElementId": "SPDXRef-Package-github-action-actions-checkout-11baa6d69bb30bd8",
+   "relatedSpdxElement": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-publish.yml-048374256c5e2892",
+   "relationshipType": "OTHER",
+   "comment": "evident-by: indicates the package's existence is evident by the given file"
+  },
+  {
+   "spdxElementId": "SPDXRef-Package-github-action-pypa-gh-action-pypi-publish-21ca1084aaddf198",
+   "relatedSpdxElement": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-publish.yml-048374256c5e2892",
+   "relationshipType": "OTHER",
+   "comment": "evident-by: indicates the package's existence is evident by the given file"
+  },
+  {
+   "spdxElementId": "SPDXRef-Package-github-action-actions-setup-python-48f977588ae0da09",
+   "relatedSpdxElement": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-publish.yml-048374256c5e2892",
+   "relationshipType": "OTHER",
+   "comment": "evident-by: indicates the package's existence is evident by the given file"
+  },
+  {
+   "spdxElementId": "SPDXRef-Package-github-action-actions-checkout-89dfa3ddf8e9a269",
+   "relatedSpdxElement": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-test.yml-4508200d8c2e15c8",
+   "relationshipType": "OTHER",
+   "comment": "evident-by: indicates the package's existence is evident by the given file"
+  },
+  {
+   "spdxElementId": "SPDXRef-Package-github-action-actions-setup-python-affd8f98d65ce18b",
+   "relatedSpdxElement": "SPDXRef-File--vit-pytorch-main-.github-workflows-python-test.yml-4508200d8c2e15c8",
+   "relationshipType": "OTHER",
+   "comment": "evident-by: indicates the package's existence is evident by the given file"
+  },
+  {
+   "spdxElementId": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relatedSpdxElement": "SPDXRef-Package-github-action-actions-checkout-11baa6d69bb30bd8",
+   "relationshipType": "CONTAINS"
+  },
+  {
+   "spdxElementId": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relatedSpdxElement": "SPDXRef-Package-github-action-actions-checkout-89dfa3ddf8e9a269",
+   "relationshipType": "CONTAINS"
+  },
+  {
+   "spdxElementId": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relatedSpdxElement": "SPDXRef-Package-github-action-actions-setup-python-48f977588ae0da09",
+   "relationshipType": "CONTAINS"
+  },
+  {
+   "spdxElementId": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relatedSpdxElement": "SPDXRef-Package-github-action-actions-setup-python-affd8f98d65ce18b",
+   "relationshipType": "CONTAINS"
+  },
+  {
+   "spdxElementId": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relatedSpdxElement": "SPDXRef-Package-github-action-pypa-gh-action-pypi-publish-21ca1084aaddf198",
+   "relationshipType": "CONTAINS"
+  },
+  {
+   "spdxElementId": "SPDXRef-DOCUMENT",
+   "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-C--Users-USER-Desktop-vit-pytorch-main",
+   "relationshipType": "DESCRIBES"
+  }
+ ]
+}
