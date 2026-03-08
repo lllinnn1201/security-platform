@@ -3,7 +3,8 @@ torch
 torchvision
 einops
 
-# --- 💥 火力展示專用「誘餌」(有漏洞但不會跑) ---
+# --- 💥 火力展示專用「誘餌」(純 Python，保證安裝成功) ---
 jinja2==2.11.3
-twisted==20.3.0
 requests==2.25.1
+urllib3==1.26.4
+werkzeug==2.0.1
