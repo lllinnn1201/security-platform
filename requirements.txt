@@ -1,3 +1,9 @@
+# --- 🧠 真正的 AI 核心套件 (系統會跑) ---
 torch
 torchvision
 einops
+
+# --- 💥 火力展示專用「誘餌」(有漏洞但不會跑) ---
+jinja2==2.11.3
+twisted==20.3.0
+requests==2.25.1
