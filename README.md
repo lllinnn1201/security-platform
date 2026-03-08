@@ -23,7 +23,7 @@ frontend/                    # Next.js 前端應用
 │   ├── Sidebar.tsx          # 側邊導覽列
 │   └── Topbar.tsx           # 頂部列
 └── data/                    # 資料層
-    └── mockData.ts          # Mock 資料（對齊未來 API 格式）
+    └── mockData.ts          # 資料層（型別定義 + 待接 API）
 ```
 
 ## 技術選型
